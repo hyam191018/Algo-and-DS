@@ -1,26 +1,9 @@
+#ifndef ITEM_H
+#define ITEM_H
+
+#include "algo.h"
 #include <ctime>
 #include <iostream>
-
-using namespace std;
-#define SWAP(x, y)                                                                                 \
-    do {                                                                                           \
-        x ^= y;                                                                                    \
-        y ^= x;                                                                                    \
-        x ^= y;                                                                                    \
-    } while (0);
-
-class Sorting {
-  public:
-    static void bubble_sort(int* array, int len) {
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
-                if (array[i] < array[j]) {
-                    SWAP(array[i], array[j]);
-                }
-            }
-        }
-    }
-};
 
 class Item {
   private:
@@ -28,7 +11,7 @@ class Item {
     unsigned len;
     int min;
     int max;
-    void assign_random(void) {
+    void assign(void) {
         for (int i = 0; i < len; i++) {
             array[i] = rand() % (max - min + 1) + min;
         }
@@ -38,12 +21,12 @@ class Item {
     Item(void) : len(10), min(-10), max(10) {
         srand(time(NULL));
         array = new int[len];
-        assign_random();
+        assign();
     }
     Item(int len) : len(len), min(0), max(100) {
         srand(time(NULL));
         array = new int[len];
-        assign_random();
+        assign();
     }
     Item(int len, int min, int max) : len(len), min(min), max(max) {
         srand(time(NULL));
@@ -52,7 +35,7 @@ class Item {
             SWAP(this->min, this->max);
         }
         array = new int[len];
-        assign_random();
+        assign();
     }
     ~Item(void) { delete array; }
     void show(void) {
@@ -62,4 +45,9 @@ class Item {
         cout << endl;
     }
     void bubble_sort(void) { Sorting::bubble_sort(array, len); }
+    void insertion_sort(void) { Sorting::insertion_sort(array, len); }
+    void quick_sort(void) { Sorting::quick_sort(array, len); }
+    void counting_sort(void) { Sorting::counting_sort(array, len); }
 };
+
+#endif
