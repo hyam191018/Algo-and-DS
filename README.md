@@ -25,3 +25,6 @@
 - Min heap
 
 (5) Tree
+- Binary search tree
+- AVL tree
+- RB tree
