@@ -4,45 +4,29 @@
 #include <iostream>
 using namespace std;
 
-struct node {
+struct Node {
     int num;
-    struct node* next;
-    struct node* prev;
+    Node* next;
+    Node* prev;
 };
 
-class SinglyLinkedList {
-  private:
-    node* head;
-    node* tail;
+Node* create_node(int num) {
+    Node* n = new Node;
+    n->num = num;
+    n->next = n->prev = NULL;
+}
+
+class LinkedListBase {
+  protected:
+    Node* head;
     int size;
 
   public:
-    SinglyLinkedList(void) : head(NULL), tail(NULL), size(0){};
-    int length(void) { return size; }
-    node* create_node(int num) {
-        node* n = new node;
-        n->num = num;
-        n->next = NULL;
-        return n;
-    }
-    bool isEmpty(void) {
-        if (size == 0) {
-            return true;
-        }
-        return false;
-    }
-    void insert(node* n) {
-        if (size == 0) {
-            head = tail = n;
-            size = 1;
-            return;
-        }
-        n->next = head;
-        head = n;
-        size++;
-    }
-    void printAll(void) {
-        node* tmp = head;
+    LinkedListBase() : head(nullptr), size(0) {}
+    int length() const { return size; }
+    bool isEmpty() const { return size == 0; }
+    void printAll() const {
+        Node* tmp = head;
         cout << "List all: ";
         while (tmp) {
             cout << tmp->num << " ";
@@ -52,81 +36,9 @@ class SinglyLinkedList {
     }
 };
 
-class DoublyLinkedList {
-  private:
-    node* head;
-    node* tail;
-    int size;
-
+class SinglyLinkedList : public LinkedListBase {
   public:
-    DoublyLinkedList(void) : head(NULL), tail(NULL), size(0){};
-    int length(void) { return size; }
-    node* create_node(int num) {
-        node* n = new node;
-        n->num = num;
-        n->next = NULL;
-        n->prev = NULL;
-        return n;
-    }
-    bool isEmpty(void) {
-        if (size == 0) {
-            return true;
-        }
-        return false;
-    }
-    void insert(node* n) {
-        if (size == 0) {
-            head = tail = n;
-            size = 1;
-            return;
-        }
-        head->prev = n;
-        n->next = head;
-        head = n;
-        size++;
-    }
-    void printAll(void) {
-        node* tmp = head;
-        cout << "List all: ";
-        while (tmp) {
-            cout << tmp->num << " ";
-            tmp = tmp->next;
-        }
-        cout << endl;
-    }
-    void printAll_inv(void) {
-        node* tmp = tail;
-        cout << "List all invert: ";
-        while (tmp) {
-            cout << tmp->num << " ";
-            tmp = tmp->prev;
-        }
-        cout << endl;
-    }
-};
-
-// use Singly linked list
-class Stack {
-  private:
-    node* head;
-    int size;
-
-  public:
-    Stack(void) : head(NULL), size(0){};
-    int length(void) { return size; }
-    node* create_node(int num) {
-        node* n = new node;
-        n->num = num;
-        n->next = NULL;
-        return n;
-    }
-    bool isEmpty(void) {
-        if (size == 0) {
-            return true;
-        }
-        return false;
-    }
-    void push(node* n) {
+    void insert(Node* n) {
         if (size == 0) {
             head = n;
             size = 1;
@@ -136,49 +48,15 @@ class Stack {
         head = n;
         size++;
     }
-    node* pop(void) {
-        if (size == 0) {
-            return NULL;
-        }
-        node* n = head;
-        head = n->next;
-        size--;
-        return n;
-    }
-    void printAll(void) {
-        node* tmp = head;
-        cout << "Top to down: ";
-        while (tmp) {
-            cout << tmp->num << " ";
-            tmp = tmp->next;
-        }
-        cout << endl;
-    }
 };
 
-// use Doubly linked list
-class Queue {
-  private:
-    node* head;
-    node* tail;
-    int size;
+class DoublyLinkedList : public LinkedListBase {
+  protected:
+    Node* tail;
 
   public:
-    Queue(void) : head(NULL), tail(NULL), size(0){};
-    int length(void) { return size; }
-    node* create_node(int num) {
-        node* n = new node;
-        n->num = num;
-        n->next = NULL;
-        return n;
-    }
-    bool isEmpty(void) {
-        if (size == 0) {
-            return true;
-        }
-        return false;
-    }
-    void push(node* n) {
+    DoublyLinkedList() : tail(nullptr) {}
+    void insert(Node* n) {
         if (size == 0) {
             head = tail = n;
             size = 1;
@@ -189,33 +67,66 @@ class Queue {
         head = n;
         size++;
     }
-    node* pop(void) {
-        if (size == 0) {
-            return NULL;
-        }
-        node* n = tail;
-        tail = n->prev;
-        tail->next = NULL;
-        size--;
-        return n;
-    }
-    void printAll(void) {
-        node* tmp = head;
-        cout << "Top to down: ";
-        while (tmp) {
-            cout << tmp->num << " ";
-            tmp = tmp->next;
-        }
-        cout << endl;
-    }
-    void printAll_inv(void) {
-        node* tmp = tail;
+    void printAllInv() const {
+        Node* tmp = tail;
         cout << "List all invert: ";
         while (tmp) {
             cout << tmp->num << " ";
             tmp = tmp->prev;
         }
         cout << endl;
+    }
+};
+
+class Stack : public SinglyLinkedList {
+  public:
+    void push(Node* n) {
+        if (size == 0) {
+            head = n;
+            size = 1;
+            return;
+        }
+        n->next = head;
+        head = n;
+        size++;
+    }
+    Node* pop() {
+        if (size == 0) {
+            return nullptr;
+        }
+        Node* n = head;
+        head = n->next;
+        size--;
+        return n;
+    }
+};
+
+class Queue : public DoublyLinkedList {
+  public:
+    void push(Node* n) {
+        if (size == 0) {
+            head = tail = n;
+            size = 1;
+            return;
+        }
+        head->prev = n;
+        n->next = head;
+        head = n;
+        size++;
+    }
+    Node* pop() {
+        if (size == 0) {
+            return nullptr;
+        }
+        Node* n = tail;
+        tail = n->prev;
+        if (tail) {
+            tail->next = nullptr;
+        } else {
+            head = nullptr;
+        }
+        size--;
+        return n;
     }
 };
 
