@@ -14,7 +14,6 @@
 
 (3) Linked list
 - Singly linked list
-- Circularly linked list
 - Doubly linked list
 - Stack
 - Queue
