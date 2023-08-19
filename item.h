@@ -63,7 +63,6 @@ class Item {
     void merge_sort(void) { Sorting::merge_sort(array, result, len); }
     void selection_sort(void) { Sorting::selection_sort(array, result, len); }
     void quick_sort(void) { Sorting::quick_sort(array, result, len); }
-    void heap_sort(void) { Sorting::heap_sort(array, result, len); }
 };
 
 #endif

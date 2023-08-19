@@ -1,7 +1,7 @@
 #include "item.h"
 #include "timer.h"
 
-int main(void) {
+void sorting_test(void) {
     Item item(10, -200, 200);
 
     auto timer = timer_start();
@@ -44,4 +44,15 @@ int main(void) {
     item.selection_sort();
     cout << "After selection sort: ";
     item.show_result();
+    timer_end(timer);
+
+    timer = timer_start();
+    cout << "Before quick sort:    ";
+    item.show_array();
+    item.quick_sort();
+    cout << "After quick sort:     ";
+    item.show_result();
+    timer_end(timer);
 }
+
+int main(void) { sorting_test(); }

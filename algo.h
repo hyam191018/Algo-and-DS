@@ -41,6 +41,30 @@ class Sorting {
         }
         memcpy(array, result, len * sizeof(int));
     }
+    static void _quick_sort(int* array, int len) {
+        if (len < 2) {
+            return;
+        }
+        int pivot = len / 2;
+        // 盢pivot簿笆程
+        swap(array[pivot], array[len - 1]);
+
+        // オ娩计常璶ゑarray[len-1]
+        // 娩计常璶ゑarray[len-1]
+        int store = 0;
+        for (int i = 0; i < len - 1; i++) {
+            if (array[i] < array[len - 1]) {
+                swap(array[i], array[store]);
+                store++;
+            }
+        }
+        // 程蛤storeユ传タ絋竚
+        swap(array[store], array[len - 1]);
+
+        // オ膥尿患癹
+        _quick_sort(array, store);
+        _quick_sort(array + store + 1, len - store - 1);
+    }
 
   public:
     static void bubble_sort(int* array, int* result, int len) {
@@ -112,8 +136,10 @@ class Sorting {
             swap(result[i], result[min]);
         }
     }
-    static void quick_sort(int* array, int* result, int len) {}
-    static void heap_sort(int* array, int* result, int len) {}
+    static void quick_sort(int* array, int* result, int len) {
+        memcpy(result, array, len * sizeof(int));
+        _quick_sort(result, len);
+    }
 };
 
 #endif
