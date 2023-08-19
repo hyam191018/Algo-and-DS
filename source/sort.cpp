@@ -1,5 +1,5 @@
-#include "include/item.h"
-#include "include/timer.h"
+#include "../include/sort.h"
+#include "../include/timer.h"
 
 void sorting_test(void) {
     Item item(10, -200, 200);
