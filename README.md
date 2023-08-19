@@ -11,7 +11,6 @@
 (2) Unstable sorting
 - Selection sort : O(n^2)
 - Quick sort : O(nlogn)
-- Heap sort : O(nlogn)
 
 (3) Array and linked list
 - Singly linked list
