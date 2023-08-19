@@ -5,13 +5,6 @@
 #include <iostream>
 using namespace std;
 
-#define SWAP(x, y)                                                                                 \
-    do {                                                                                           \
-        x ^= y;                                                                                    \
-        y ^= x;                                                                                    \
-        x ^= y;                                                                                    \
-    } while (0);
-
 class Sorting {
   private:
     // 將一個array分成左右兩個array
@@ -55,7 +48,7 @@ class Sorting {
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len; j++) {
                 if (result[i] < result[j]) {
-                    SWAP(result[i], result[j]);
+                    swap(result[i], result[j]);
                 }
             }
         }
@@ -68,17 +61,17 @@ class Sorting {
                 if (result[j] > result[j - 1]) {
                     break;
                 }
-                SWAP(result[j], result[j - 1]);
+                swap(result[j], result[j - 1]);
             }
         }
     }
     static void counting_sort(int* array, int* result, int len, int min, int max) {
         int range = max - min + 1;
-        int counter[range];
+        int* counter = new int[range];
         fill(counter, counter + range, 0);
         // O(n)
         for (int i = 0; i < len; i++) {
-            counter[array[i]]++;
+            counter[array[i] - min]++;
         }
         // O(k) : max-min+1
         int loc = 0;
@@ -89,8 +82,12 @@ class Sorting {
             fill(result + loc, result + loc + counter[i], i + min);
             loc += counter[i];
         }
+        delete[] counter;
     }
     static void merge_sort(int* array, int* result, int len) {
+        // backup
+        int* tmp = new int[len];
+        memcpy(tmp, array, len * sizeof(int));
         // Top-down
         int mid = len / 2;
         // left array 0~mid
@@ -99,9 +96,22 @@ class Sorting {
         merge_sort_divide(array + mid, result + mid, len - mid);
         // merge
         merge_sort_conquer(array, result, 0, mid, len);
-        memcpy(result, array, len * sizeof(int));
+        // return
+        memcpy(array, tmp, len * sizeof(int));
+        delete tmp;
     }
-    static void selection_sort(int* array, int* result, int len) {}
+    static void selection_sort(int* array, int* result, int len) {
+        memcpy(result, array, len * sizeof(int));
+        for (int i = 0; i < len; i++) {
+            int min = i;
+            for (int j = i + 1; j < len; j++) {
+                if (result[j] < result[min]) {
+                    min = j;
+                }
+            }
+            swap(result[i], result[min]);
+        }
+    }
     static void quick_sort(int* array, int* result, int len) {}
     static void heap_sort(int* array, int* result, int len) {}
 };

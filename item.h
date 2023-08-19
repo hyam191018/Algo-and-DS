@@ -35,7 +35,7 @@ class Item {
         srand(time(NULL));
         if (this->min > this->max) {
             cout << "Error: minimum is bigger than maximum. (so I swapped them)" << endl;
-            SWAP(this->min, this->max);
+            swap(this->min, this->max);
         }
         array = new int[len];
         result = new int[len];
