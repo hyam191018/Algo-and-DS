@@ -28,3 +28,9 @@
 - Binary search tree
 - AVL tree
 - RB tree
+
+<< TODO >>
+- B tree
+- B+ tree
+- Radix tree
+- Maple tree
