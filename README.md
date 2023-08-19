@@ -12,7 +12,7 @@
 - Selection sort : O(n^2)
 - Quick sort : O(nlogn)
 
-(3) Array and linked list
+(3) Linked list
 - Singly linked list
 - Circularly linked list
 - Doubly linked list
