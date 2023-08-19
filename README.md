@@ -7,7 +7,7 @@
 - Insertion sort : O(n^2)
 - Counting sort : O(n+k)
 - Merge sort : O(nlogn)
-- Bucket sort : O(n+k) <<TODO>>
+- Bucket sort : O(n+k) <X>
 
 (2) Unstable sorting
 - Selection sort : O(n^2)
@@ -18,23 +18,23 @@
 - Doubly linked list
 - Stack
 - Queue
-- Skip List  <<TODO>>
+- Skip List  <X>
 
 (4) Heap
-- Max heap
-- Min heap
-- Priority queue
-- Heap sort : O(nlogn)
+- Max heap <X>
+- Min heap <X>
+- Priority queue <X>
+- Heap sort : O(nlogn) <X>
 
 (5) Tree
-- Binary search tree
-- Splay tree
-- AVL tree
-- RB tree
-- B tree
-- B+ tree
-- Radix tree
-- Maple tree
+- Binary search tree <X>
+- Splay tree <X>
+- AVL tree <X>
+- RB tree <X>
+- B tree <X>
+- B+ tree <X>
+- Radix tree <X>
+- Maple tree <X>
 
 (6) Graph
 
