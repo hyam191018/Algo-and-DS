@@ -22,6 +22,8 @@
 (4) Heap
 - Max heap
 - Min heap
+- Priority queue
+- Heap sort : O(nlogn)
 
 (5) Tree
 - Binary search tree
