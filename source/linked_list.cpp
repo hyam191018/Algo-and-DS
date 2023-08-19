@@ -30,4 +30,48 @@ int main(void) {
     Dlist.printAll();
     Dlist.printAll_inv();
     cout << "List size is " << Dlist.length() << endl;
+
+    Stack stack;
+    n = stack.create_node(5);
+    stack.push(n);
+    n = stack.create_node(6);
+    stack.push(n);
+    n = stack.create_node(2);
+    stack.push(n);
+    n = stack.create_node(4);
+    stack.push(n);
+    n = stack.create_node(3);
+    stack.push(n);
+    stack.printAll();
+    stack.pop();
+    stack.pop();
+    stack.printAll();
+    n = stack.create_node(7);
+    stack.push(n);
+    n = stack.create_node(7);
+    stack.push(n);
+    stack.printAll();
+    cout << "Stack size is " << stack.length() << endl;
+
+    Queue queue;
+    n = queue.create_node(5);
+    queue.push(n);
+    n = queue.create_node(6);
+    queue.push(n);
+    n = queue.create_node(2);
+    queue.push(n);
+    n = queue.create_node(4);
+    queue.push(n);
+    n = queue.create_node(3);
+    queue.push(n);
+    queue.printAll();
+    queue.pop();
+    queue.pop();
+    queue.printAll();
+    n = queue.create_node(7);
+    queue.push(n);
+    n = queue.create_node(7);
+    queue.push(n);
+    queue.printAll();
+    cout << "Queue size is " << queue.length() << endl;
 }
