@@ -6,7 +6,7 @@
 |:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 | 平均時間  | O(n^2)  | O(n^2)  | O(n^2)  | O(n+m)  | O(nlogn)  | O(nlogn)  | O(nlogn) |
 | 最差時間  | O(n^2)  | O(n^2)  | O(n^2)  | O(n+m)  | O(nlogn)  | O(n^2)  | O(nlogn) |
-| 額外空間  | O(1)    | O(1)    | O(1)    | O(n+m)  | O(n)      | O(logn)  | O(1)     |
+| 額外空間  | O(1)    | O(1)    | O(1)    | O(n+m)  | O(n)      | O(1)  | O(1)     |
 
 PS: quick sort + insertion sort !
 通常情況下，因CPU cache，quick sort會比merge sort表現較佳，但quick sort有時會面臨最差情況(快排序好的)，此時最好切換成insertion sort。
