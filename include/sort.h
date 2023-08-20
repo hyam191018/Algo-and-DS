@@ -123,7 +123,7 @@ class Sorting {
         merge_sort_conquer(array, result, 0, mid, len);
         // return
         memcpy(array, tmp, len * sizeof(int));
-        delete tmp;
+        delete[] tmp;
     }
     static void selection_sort(int* array, int* result, int len) {
         memcpy(result, array, len * sizeof(int));
@@ -180,8 +180,8 @@ class Item {
         assign();
     }
     ~Item(void) {
-        delete array;
-        delete result;
+        delete[] array;
+        delete[] result;
     }
     void show_array(void) {
         for (int i = 0; i < len; i++) {

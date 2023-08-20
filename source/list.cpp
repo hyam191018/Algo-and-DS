@@ -1,9 +1,9 @@
-#include "../include/linked_list.h"
+#include "../include/list.h"
 
 int main(void) {
     SinglyLinkedList Slist;
     cout << "<< Testing Singly Linked list >>" << endl;
-    Node* n;
+    node* n;
     n = create_node(5);
     Slist.insert(n);
     n = create_node(6);
