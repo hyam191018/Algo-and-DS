@@ -8,8 +8,7 @@
 | 最差時間  | O(n^2)  | O(n^2)  | O(n^2)  | O(n+m)  | O(nlogn)  | O(n^2)  | O(nlogn) |
 | 額外空間  | O(1)    | O(1)    | O(1)    | O(n+m)  | O(n)      | O(1)  | O(1)     |
 
-PS: quick sort + insertion sort !
-通常情況下，因CPU cache，quick sort會比merge sort表現較佳，但quick sort有時會面臨最差情況(快排序好的)，此時最好切換成insertion sort。
+通常情況下，因CPU cache，quick sort會比merge sort表現較佳，但quick sort有機會面臨最差情況(如快排序好的或選到不好的pivot)，此時最好切換成insertion sort。
 
 (1) Stable sorting
 - Bubble sort : O(n^2)
