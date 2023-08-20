@@ -20,6 +20,14 @@
 - Selection sort : O(n^2)
 - Quick sort : O(nlogn)
 
+| DS | Singly linked list | Doubly linked list | Stack | Queue | Hash map  | Skip list |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| 查找  | O(n)  | O(n)  | O(n)  | O(n)  | O(1)  | O(logn)  | 
+| 插入  | O(1)  | O(1)  | O(1)  | O(1)  | O(1)  | O(logn)  | 
+| 刪除  | O(n)    | O(n)    | O(1)    | O(1)  | O(1)      | O(logn)  | 
+
+stack跟queue只有在刪除第一個(或最後一個)元素時才能達到O(1)，而Hash map受限於Array與Collision的問題，表現可能會達到O(n)，而Skip list若沒有做好平衡，也可能會變成O(n)
+
 (3) List
 - Singly linked list
 - Doubly linked list
