@@ -7,7 +7,6 @@
 - Insertion sort : O(n^2)
 - Counting sort : O(n+k)
 - Merge sort : O(nlogn)
-- Bucket sort : O(n+k) ~TODO
 
 (2) Unstable sorting
 - Selection sort : O(n^2)
