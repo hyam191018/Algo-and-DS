@@ -28,6 +28,7 @@ int main() {
     }
 
     bst.printTree();
+    bst.inorder_traversal();
 
     return 0;
 }

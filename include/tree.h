@@ -35,6 +35,17 @@ class TreeBase {
         printTree(node->left, prefix + (isLeft ? "    " : "¢x   "), true);
     }
     void printTree(void) { printTree(root); }
+    void inorder_traversal(TreeNode* node) {
+        if (!node)
+            return;
+        inorder_traversal(node->left);
+        cout << node->num << " ";
+        inorder_traversal(node->right);
+    }
+    void inorder_traversal(void) {
+        inorder_traversal(root);
+        cout << endl;
+    }
 };
 
 class BinarySearchTree : public TreeBase {
