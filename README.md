@@ -13,13 +13,14 @@
 - Selection sort : O(n^2)
 - Quick sort : O(nlogn)
 
-(3) Linked list
+(3) List
 - Singly linked list
 - Doubly linked list
 - Stack
 - Queue
-- Skip List  ~TODO
-
+- Hash Map
+- Skip List
+  
 (4) Heap
 - Max heap ~TODO
 - Min heap ~TODO
