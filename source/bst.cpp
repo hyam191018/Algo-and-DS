@@ -15,10 +15,12 @@ int main() {
         bst.insert(num);
     }
 
+    bst.inorder_traversal();
     // Search phase
     for (int i = 0; i < numOperations; ++i) {
-        int num = rand() % 100; // Generate a random number
-        bool found = bst.search(num);
+        if (!bst.search(i)) {
+            cout << "No find " << i << endl;
+        }
     }
 
     // Removal phase
