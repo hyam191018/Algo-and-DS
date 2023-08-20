@@ -18,7 +18,7 @@
 - Stack
 - Queue
 - Hash Map
-- Skip List
+- Skip List ~TODO
   
 (4) Heap
 - Max heap ~TODO
