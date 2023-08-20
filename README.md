@@ -21,7 +21,7 @@
 - Quick sort : O(nlogn)
 
 | DS | Singly linked list | Doubly linked list | Stack | Queue | Hash map  | Skip list |
-|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 | 查找  | O(n)  | O(n)  | O(n)  | O(n)  | O(1)  | O(logn)  | 
 | 插入  | O(1)  | O(1)  | O(1)  | O(1)  | O(1)  | O(logn)  | 
 | 刪除  | O(n)    | O(n)    | O(1)    | O(1)  | O(1)      | O(logn)  | 
