@@ -2,6 +2,12 @@
 
 用C++來練習基本的演算法與資料結構
 
+| Sort Algo | Bubble | Insertion | Selection | Counting | Merge  | Quick  | Heap |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| 平均時間  | O(n^2)  | O(n^2)  | O(n^2)  | O(n+m)  | O(nlogn)  | O(nlogn)  | O(nlogn) |
+| 最差時間  | O(n^2)  | O(n^2)  | O(n^2)  | O(n+m)  | O(nlogn)  | O(n^2)  | O(nlogn) |
+| 額外空間  | O(1)    | O(1)    | O(1)    | O(n+m)  | O(1)      | O(logn)  | O(1)     |
+
 (1) Stable sorting
 - Bubble sort : O(n^2)
 - Insertion sort : O(n^2)
@@ -11,11 +17,6 @@
 (2) Unstable sorting
 - Selection sort : O(n^2)
 - Quick sort : O(nlogn)
-
-| 列标题1 | 列标题2 | 列标题3 |
-|:--:|:--:|:--:|
-| 单元格1  | 单元格2  | 单元格3  |
-| 单元格4  | 单元格5  | 单元格6  |
 
 (3) List
 - Singly linked list
