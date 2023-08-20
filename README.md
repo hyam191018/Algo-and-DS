@@ -27,10 +27,10 @@
 - Heap sort : O(nlogn) ~TODO
 
 (5) Tree
-- Binary search tree ~TODO
+- Binary search tree
+- AVL tree
+- RB tree
 - Splay tree ~TODO
-- AVL tree ~TODO
-- RB tree ~TODO
 - B tree ~TODO
 - B+ tree ~TODO
 - Radix tree ~TODO
