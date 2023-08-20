@@ -4,21 +4,21 @@
 #include <iostream>
 using namespace std;
 
-struct node {
+struct ListNode {
     int num;
-    node* next;
-    node* prev;
+    ListNode* next;
+    ListNode* prev;
 };
 
-node* create_node(int num) {
-    node* n = new node;
+ListNode* create_node(int num) {
+    ListNode* n = new ListNode;
     n->num = num;
     n->next = n->prev = NULL;
 }
 
 class LinkedListBase {
   protected:
-    node* head;
+    ListNode* head;
     int size;
 
   public:
@@ -26,7 +26,7 @@ class LinkedListBase {
     int length() const { return size; }
     bool isEmpty() const { return size == 0; }
     void printAll() const {
-        node* tmp = head;
+        ListNode* tmp = head;
         cout << "List all: ";
         while (tmp) {
             cout << tmp->num << " ";
@@ -38,7 +38,7 @@ class LinkedListBase {
 
 class SinglyLinkedList : public LinkedListBase {
   public:
-    void insert(node* n) {
+    void insert(ListNode* n) {
         if (size == 0) {
             head = n;
             size = 1;
@@ -52,11 +52,11 @@ class SinglyLinkedList : public LinkedListBase {
 
 class DoublyLinkedList : public LinkedListBase {
   protected:
-    node* tail;
+    ListNode* tail;
 
   public:
     DoublyLinkedList() : tail(nullptr) {}
-    void insert(node* n) {
+    void insert(ListNode* n) {
         if (size == 0) {
             head = tail = n;
             size = 1;
@@ -68,7 +68,7 @@ class DoublyLinkedList : public LinkedListBase {
         size++;
     }
     void printAllInv() const {
-        node* tmp = tail;
+        ListNode* tmp = tail;
         cout << "List all invert: ";
         while (tmp) {
             cout << tmp->num << " ";
@@ -80,7 +80,7 @@ class DoublyLinkedList : public LinkedListBase {
 
 class Stack : public SinglyLinkedList {
   public:
-    void push(node* n) {
+    void push(ListNode* n) {
         if (size == 0) {
             head = n;
             size = 1;
@@ -90,11 +90,11 @@ class Stack : public SinglyLinkedList {
         head = n;
         size++;
     }
-    node* pop() {
+    ListNode* pop() {
         if (size == 0) {
             return nullptr;
         }
-        node* n = head;
+        ListNode* n = head;
         head = n->next;
         size--;
         return n;
@@ -103,7 +103,7 @@ class Stack : public SinglyLinkedList {
 
 class Queue : public DoublyLinkedList {
   public:
-    void push(node* n) {
+    void push(ListNode* n) {
         if (size == 0) {
             head = tail = n;
             size = 1;
@@ -114,11 +114,11 @@ class Queue : public DoublyLinkedList {
         head = n;
         size++;
     }
-    node* pop() {
+    ListNode* pop() {
         if (size == 0) {
             return nullptr;
         }
-        node* n = tail;
+        ListNode* n = tail;
         tail = n->prev;
         if (tail) {
             tail->next = nullptr;

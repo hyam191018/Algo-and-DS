@@ -3,7 +3,7 @@
 int main(void) {
     SinglyLinkedList Slist;
     cout << "<< Testing Singly Linked list >>" << endl;
-    node* n;
+    ListNode* n;
     n = create_node(5);
     Slist.insert(n);
     n = create_node(6);
