@@ -33,6 +33,29 @@ class LinkedListBase {
         }
         cout << endl;
     }
+    void swapValue(ListNode* a, ListNode* b) {
+        int tmp = a->num;
+        a->num = b->num;
+        b->num = tmp;
+    }
+    ListNode* findMin(ListNode* start) {
+        ListNode* min = start;
+        ListNode* tmp = start->next;
+        while (tmp) {
+            if (tmp->num < min->num) {
+                min = tmp;
+            }
+            tmp = tmp->next;
+        }
+        return min;
+    }
+    void sort(void) { // selection sort
+        ListNode* tar = head;
+        while (tar) {
+            swapValue(tar, findMin(tar));
+            tar = tar->next;
+        }
+    }
 };
 
 class SinglyLinkedList : public LinkedListBase {
