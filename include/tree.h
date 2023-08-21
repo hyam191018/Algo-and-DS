@@ -10,14 +10,19 @@ class TreeNode {
     int height;
     TreeNode* left;
     TreeNode* right;
-    TreeNode(void) : num(0), left(nullptr), right(nullptr) {}
-    TreeNode(int num) : num(num), left(nullptr), right(nullptr) {}
+    TreeNode(void) : num(0), height(-1), left(nullptr), right(nullptr) {}
+    TreeNode(int num) : num(num), height(-1), left(nullptr), right(nullptr) {}
     int get_height(void) { return height; }
     void set_height(int h) { height = h; }
     void update_height(TreeNode* node) {
         if (!node) {
             return;
         }
+        if (!node->left && !node->right) {
+            node->set_height(0);
+            return;
+        }
+
         update_height(node->left);
         update_height(node->right);
         int right_h = -1, left_h = -1;
@@ -164,23 +169,33 @@ class AVLTree : public BinarySearchTree {
   private:
     int balance_factor(TreeNode* node) {
         if (!node) {
-            return -1;
+            return 0;
         }
 
-        return (node->left ? (node->left)->get_height() : -1) -
-               (node->right ? (node->right)->get_height() : -1);
+        int left_height = (node->left ? (node->left)->get_height() : -1);
+        int right_height = (node->right ? (node->right)->get_height() : -1);
+
+        return left_height - right_height;
     }
-    void right_rotation(TreeNode* node) {}
-    void left_rotation(TreeNode* node) {}
-    void update_treebalance(TreeNode* node) {
-        node->update_height();
-        node->get_height();
+    TreeNode* right_rotation(TreeNode* node) {
+        TreeNode* new_node = node->left;
+        node->left = new_node->right;
+        new_node->right = node;
+        return new_node;
     }
+    TreeNode* left_rotation(TreeNode* node) {
+        TreeNode* new_node = node->right;
+        node->right = new_node->left;
+        new_node->left = node;
+        return new_node;
+    }
+    void update_treeHeight(TreeNode* node) { node->update_height(); }
+    TreeNode* update_treeBalance(TreeNode* node) {}
 
   public:
-    void insert(int num) { TreeNode* new_node = BinarySearchTree::insert(num); }
+    void insert(int num) { TreeNode* n = BinarySearchTree::insert(num); }
     bool search(int num) { return BinarySearchTree::search(num); }
-    void remove(int num) { BinarySearchTree::remove(num); }
+    void remove(int num) { root = BinarySearchTree::remove(root, num); }
 };
 
 #endif
