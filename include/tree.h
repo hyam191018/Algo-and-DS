@@ -85,22 +85,14 @@ class BinarySearchTree : public TreeBase {
         if (!node) { // 建立新的node
             new_node = new TreeNode(num);
             return new_node;
-        } else if (num == node->num) { // 重複
-            return node;
         }
 
         if (num > node->num) {
-            new_node = insert(node->right, num);
-            if (!node->right) {
-                node->right = new_node;
-            }
-        } else {
-            new_node = insert(node->left, num);
-            if (!node->left) {
-                node->left = new_node;
-            }
+            node->right = insert(node->right, num);
+        } else if (num < node->num) {
+            node->left = insert(node->left, num);
         }
-        return new_node;
+        return node;
     }
     bool search(TreeNode* node, int num) {
         if (!node) {
@@ -115,7 +107,7 @@ class BinarySearchTree : public TreeBase {
             return search(node->left, num);
         }
     }
-    TreeNode* remove(TreeNode* node, int num, bool free = true) {
+    TreeNode* remove(TreeNode* node, int num) {
         if (!node) { // 不存在
             return nullptr;
         } else if (num == node->num) { // 刪除
@@ -123,36 +115,27 @@ class BinarySearchTree : public TreeBase {
             if (node->right) { // 取代
                 if (node->left) {
                     new_node = findMin(node->right);
-                    new_node->right = remove(node->right, new_node->num, false);
-                    new_node->left = node->left;
+                    node->num = new_node->num;
+                    node->right = remove(node->right, new_node->num);
+                    return node;
                 } else {
                     new_node = node->right;
                 }
             } else if (node->left) {
                 new_node = node->left;
             }
-
-            if (free) {
-                delete node;
-            }
+            delete node;
             return new_node;
         }
 
         if (num > node->num) {
-            node->right = remove(node->right, num, free);
+            node->right = remove(node->right, num);
         } else {
-            node->left = remove(node->left, num, free);
+            node->left = remove(node->left, num);
         }
-
         return node;
     }
-    TreeNode* insert(int num) {
-        if (!root) {
-            return root = insert(root, num);
-        } else {
-            return insert(root, num);
-        }
-    }
+    void insert(int num) { root = insert(root, num); }
     bool search(int num) { return search(root, num); }
     void remove(int num) { root = remove(root, num); }
 };
@@ -187,7 +170,7 @@ class AVLTree : public BinarySearchTree {
     TreeNode* update_treeBalance(TreeNode* node) {}
 
   public:
-    void insert(int num) { TreeNode* n = BinarySearchTree::insert(num); }
+    void insert(int num) { root = BinarySearchTree::insert(root, num); }
     bool search(int num) { return BinarySearchTree::search(num); }
     void remove(int num) { root = BinarySearchTree::remove(root, num); }
 };
