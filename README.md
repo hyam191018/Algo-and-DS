@@ -1,4 +1,4 @@
-# Algo-and-DS
+# Algorithms-and-DataStructures
 
 用C++來練習基本的演算法與資料結構
 
