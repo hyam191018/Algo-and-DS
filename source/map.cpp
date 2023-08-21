@@ -7,42 +7,38 @@
 using namespace std;
 
 int main() {
-    srand(time(NULL)); // 初始化隨機種子
+    srand(time(nullptr)); // 初始化隨機種子
 
-    // 創建 HashMap 實例
-    HashMap hashMap1(10);
-    HashMap hashMap2(20);
+    HashMap map(30);
 
-    // 插入鍵值對
-    for (int i = 0; i < 10000; i++) {
-        string key = "key_" + to_string(i);
+    cout << "<< Testing Hash map >>" << endl;
+    for (int i = 0; i < 5; i++) {
+        string key = "key_" + to_string(rand() % 10);
         int value = rand() % 100;
-        hashMap1.insert(key, value);
-        hashMap2.insert(key, value);
+        if (map.insert(key, value)) {
+            cout << "Insert "
+                 << "(" << key << ", " << value << ")" << endl;
+        }
     }
 
-    // 查找鍵對應的值
     int value;
-    for (int i = 0; i < 5000; i++) {
-        string key = "key_" + to_string(rand() % 10000);
-        if (hashMap1.lookup(key, value)) {
-            cout << "Value for key '" << key << "' in hashMap1: " << value << endl;
-        }
-        if (hashMap2.lookup(key, value)) {
-            cout << "Value for key '" << key << "' in hashMap2: " << value << endl;
+    for (int i = 0; i < 10; i++) {
+        string key = "key_" + to_string(i);
+        if (map.lookup(key, value)) {
+            cout << "Value for key '" << key << "' in map: " << value << endl;
         }
     }
 
-    // 刪除鍵值對
-    for (int i = 0; i < 2000; i++) {
-        string key = "key_" + to_string(rand() % 10000);
-        hashMap1.remove(key);
-        hashMap2.remove(key);
+    for (int i = 0; i < 5; i++) {
+        string key = "key_" + to_string(rand() % 10);
+        if (map.remove(key)) {
+            cout << "Remove " << key << endl;
+        }
     }
 
+    map.showMap();
     // 清空 HashMap
-    hashMap1.clear();
-    hashMap2.clear();
+    map.clear();
 
     return 0;
 }
