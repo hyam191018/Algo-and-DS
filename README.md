@@ -1,6 +1,6 @@
-# Algo-and-DS
+# DataStructures and Algorithms
 
-用C++來練習基本的演算法與資料結構
+用C++來練習基本的資料結構與演算法
 
 (1) Stable sorting
 - Bubble sort : O(n^2)
