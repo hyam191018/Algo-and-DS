@@ -79,7 +79,7 @@ class TreeBase {
 };
 
 class BinarySearchTree : public TreeBase {
-  public:
+  protected:
     TreeNode* insert(TreeNode* node, int num) {
         TreeNode* new_node;
         if (!node) { // 建立新的node
@@ -135,6 +135,8 @@ class BinarySearchTree : public TreeBase {
         }
         return node;
     }
+
+  public:
     void insert(int num) { root = insert(root, num); }
     bool search(int num) { return search(root, num); }
     void remove(int num) { root = remove(root, num); }
@@ -143,7 +145,7 @@ class BinarySearchTree : public TreeBase {
 /** -----------------------------------------------------------------*/
 
 class AVLTree : public BinarySearchTree {
-  private:
+  protected:
     int balance_factor(TreeNode* node) {
         if (!node) {
             return 0;
@@ -167,12 +169,47 @@ class AVLTree : public BinarySearchTree {
         return new_node;
     }
     void update_treeHeight(TreeNode* node) { node->update_height(); }
-    TreeNode* update_treeBalance(TreeNode* node) {}
+    TreeNode* update_treeBalance(TreeNode* node) {
+        if (!node) {
+            return nullptr;
+        }
+        int bf = balance_factor(node);
+        if (bf > 1) { // 左子樹過重
+            if (balance_factor(node->left) >= 1) {
+                // LL type
+                return right_rotation(node);
+            } else {
+                // LR type
+                node->left = left_rotation(node->left);
+                return right_rotation(node);
+            }
+        } else if (bf < -1) { // 右子樹過重
+            if (balance_factor(node->right) <= -1) {
+                // RR type
+                return left_rotation(node);
+            } else {
+                // RL type
+                node->right = right_rotation(node->right);
+                return left_rotation(node);
+            }
+        }
+        return node;
+    }
+    TreeNode* insert(TreeNode* node, int num) {
+        node = BinarySearchTree::insert(node, num);
+        update_treeHeight(node);
+        return update_treeBalance(node);
+    }
+    TreeNode* remove(TreeNode* node, int num) {
+        node = BinarySearchTree::remove(node, num);
+        update_treeHeight(node);
+        return update_treeBalance(node);
+    }
 
   public:
-    void insert(int num) { root = BinarySearchTree::insert(root, num); }
-    bool search(int num) { return BinarySearchTree::search(num); }
-    void remove(int num) { root = BinarySearchTree::remove(root, num); }
+    void insert(int num) { root = insert(root, num); }
+    bool search(int num) { return BinarySearchTree::search(root, num); }
+    void remove(int num) { root = remove(root, num); }
 };
 
 #endif

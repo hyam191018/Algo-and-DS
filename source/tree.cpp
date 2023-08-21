@@ -10,7 +10,7 @@ int main() {
     AVLTree avl;
     BinarySearchTree bst;
     SinglyLinkedList list;
-    const int numOperations = 50; // Number of operations (insert, search, remove)
+    const int numOperations = 100; // Number of operations (insert, search, remove)
 
     // Insertion phase
     for (int i = 0; i < numOperations; ++i) {
@@ -26,6 +26,9 @@ int main() {
         bst.remove(num);
         list.remove(num);
     }
+    cout << " -------------------------- BST -------------------------- " << endl;
+    bst.printTree();
+    cout << " -------------------------- AVL -------------------------- " << endl;
     avl.printTree();
     cout << " ------------------------------------------- " << endl;
     cout << "BST  all: ";
