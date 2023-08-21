@@ -6,7 +6,7 @@
 - Bubble sort : O(n^2)
 - Insertion sort : O(n^2)
 - Counting sort : O(n+k)
-- Merge sort : O(nlogn)
+- Merge sort : O(nlogn) 註: 使用Top-down的方式
 
 (2) Unstable sorting
 - Selection sort : O(n^2)
@@ -28,7 +28,7 @@
 
 (5) Tree
 - Binary search tree
-- AVL tree
+- AVL tree 註: 為BST的進階版，每次insert和remove都要動態調整root，另外，對於要如何調整LL、LR、RR、RL最好用畫圖的方式判斷。
 - RB tree
 - Splay tree ~TODO
 - B tree ~TODO
