@@ -2,61 +2,94 @@
 #include "../include/timer.h"
 
 int main(void) {
-    Item item(10, -200, 200);
+    Item item(10, -20, 20);
 
-    auto timer = timer_start();
+    cout << "<< 正向測試 >>" << endl << endl;
 
-    cout << "<< Testing bubble sort >>" << endl;
-    timer = timer_start();
+    cout << "# Testing bubble sort" << endl;
     cout << "Before sort: ";
     item.show_array();
     item.bubble_sort();
     cout << "After sort:  ";
     item.show_result();
-    timer_end(timer);
+    cout << endl;
 
-    cout << "<< Testing insertion sort >>" << endl;
-    timer = timer_start();
+    cout << "# Testing insertion sort" << endl;
     cout << "Before sort: ";
     item.show_array();
     item.insertion_sort();
     cout << "After sort:  ";
     item.show_result();
-    timer_end(timer);
+    cout << endl;
 
-    cout << "<< Testing counting sort >>" << endl;
-    timer = timer_start();
+    cout << "# Testing counting sort" << endl;
     cout << "Before sort: ";
     item.show_array();
     item.counting_sort();
     cout << "After sort:  ";
     item.show_result();
-    timer_end(timer);
+    cout << endl;
 
-    cout << "<< Testing merge sort >>" << endl;
-    timer = timer_start();
+    cout << "# Testing merge sort" << endl;
     cout << "Before sort: ";
     item.show_array();
     item.merge_sort();
     cout << "After sort:  ";
     item.show_result();
-    timer_end(timer);
+    cout << endl;
 
-    cout << "<< Testing selection sort >>" << endl;
-    timer = timer_start();
+    cout << "# Testing selection sort" << endl;
     cout << "Before sort: ";
     item.show_array();
     item.selection_sort();
     cout << "After sort:  ";
     item.show_result();
-    timer_end(timer);
+    cout << endl;
 
-    cout << "<< Testing quick sort >>" << endl;
-    timer = timer_start();
+    cout << "# Testing quick sort" << endl;
     cout << "Before sort: ";
     item.show_array();
     item.quick_sort();
     cout << "After sort:  ";
     item.show_result();
-    timer_end(timer);
+    cout << endl;
+
+    cout << "<< 時間測試 >>" << endl << endl;
+    Item item2(10000, -10000, 10000);
+
+    cout << "# Testing bubble sort" << endl;
+    auto time = timer_start();
+    item2.bubble_sort();
+    timer_end(time);
+    cout << endl;
+
+    cout << "# Testing insertion sort" << endl;
+    time = timer_start();
+    item2.insertion_sort();
+    timer_end(time);
+    cout << endl;
+
+    cout << "# Testing counting sort" << endl;
+    time = timer_start();
+    item2.counting_sort();
+    timer_end(time);
+    cout << endl;
+
+    cout << "# Testing merge sort" << endl;
+    time = timer_start();
+    item2.merge_sort();
+    timer_end(time);
+    cout << endl;
+
+    cout << "# Testing selection sort" << endl;
+    time = timer_start();
+    item2.selection_sort();
+    timer_end(time);
+    cout << endl;
+
+    cout << "# Testing quick sort" << endl;
+    time = timer_start();
+    item2.quick_sort();
+    timer_end(time);
+    cout << endl;
 }

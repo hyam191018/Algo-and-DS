@@ -10,12 +10,6 @@ struct ListNode {
     ListNode* prev;
 };
 
-ListNode* create_node(int num) {
-    ListNode* n = new ListNode;
-    n->num = num;
-    n->next = n->prev = NULL;
-}
-
 class LinkedListBase {
   protected:
     ListNode* head;
@@ -23,6 +17,11 @@ class LinkedListBase {
 
   public:
     LinkedListBase() : head(nullptr), size(0) {} // 使用nullptr取代NULL
+    ListNode* create_node(int num) {
+        ListNode* n = new ListNode;
+        n->num = num;
+        n->next = n->prev = NULL;
+    }
     int length() const { return size; }
     bool isEmpty() const { return size == 0; }
     void printAll() const {
@@ -38,15 +37,57 @@ class LinkedListBase {
 
 class SinglyLinkedList : public LinkedListBase {
   public:
-    void insert(ListNode* n) {
+    bool search(int n) {
         if (size == 0) {
-            head = n;
+            return false;
+        }
+        ListNode* tmp = head;
+        while (tmp) {
+            if (tmp->num == n) {
+                return true;
+            }
+            tmp = tmp->next;
+        }
+        return false;
+    }
+    void insert(int n) {
+        if (search(n)) {
+            return;
+        }
+        ListNode* node = create_node(n);
+        if (size == 0) {
+            head = node;
             size = 1;
             return;
         }
-        n->next = head;
-        head = n;
+        node->next = head;
+        head = node;
         size++;
+    }
+    bool remove(int n) {
+        if (size == 0) {
+            return false;
+        }
+        ListNode* prev = nullptr;
+        ListNode* tmp = head;
+        while (tmp) {
+            if (tmp->num == n) {
+                break;
+            }
+            prev = tmp;
+            tmp = tmp->next;
+        }
+        if (tmp) {
+            if (prev) {
+                prev->next = tmp->next;
+            } else {
+                head = tmp->next;
+            }
+            delete tmp;
+            size--;
+            return true;
+        }
+        return false;
     }
 };
 
@@ -56,16 +97,62 @@ class DoublyLinkedList : public LinkedListBase {
 
   public:
     DoublyLinkedList() : tail(nullptr) {}
-    void insert(ListNode* n) {
+    bool search(int n) {
         if (size == 0) {
-            head = tail = n;
+            return false;
+        }
+        ListNode* tmp = head;
+        while (tmp) {
+            if (tmp->num == n) {
+                return true;
+            }
+            tmp = tmp->next;
+        }
+        return false;
+    }
+    void insert(int n) {
+        if (search(n)) { // 重複
+            return;
+        }
+        ListNode* node = create_node(n);
+        if (size == 0) {
+            head = tail = node;
             size = 1;
             return;
         }
-        head->prev = n;
-        n->next = head;
-        head = n;
+        node->next = head;
+        head->prev = node;
+        head = node;
         size++;
+    }
+    bool remove(int n) {
+        if (size == 0) {
+            return false;
+        }
+        ListNode* prev = nullptr;
+        ListNode* tmp = head;
+        while (tmp) {
+            if (tmp->num == n) {
+                break;
+            }
+            prev = tmp;
+            tmp = tmp->next;
+        }
+        if (tmp) {
+            if (prev) {
+                prev->next = tmp->next;
+                if (tmp->next) {
+                    (tmp->next)->prev = prev;
+                }
+            } else {
+                head = tmp->next;
+                head->prev = nullptr;
+            }
+            delete tmp;
+            size--;
+            return true;
+        }
+        return false;
     }
     void printAllInv() const {
         ListNode* tmp = tail;
@@ -80,14 +167,15 @@ class DoublyLinkedList : public LinkedListBase {
 
 class Stack : public SinglyLinkedList {
   public:
-    void push(ListNode* n) {
+    void push(int n) {
+        ListNode* node = create_node(n);
         if (size == 0) {
-            head = n;
+            head = node;
             size = 1;
             return;
         }
-        n->next = head;
-        head = n;
+        node->next = head;
+        head = node;
         size++;
     }
     ListNode* pop() {
@@ -103,15 +191,16 @@ class Stack : public SinglyLinkedList {
 
 class Queue : public DoublyLinkedList {
   public:
-    void push(ListNode* n) {
+    void push(int n) {
+        ListNode* node = create_node(n);
         if (size == 0) {
-            head = tail = n;
+            head = tail = node;
             size = 1;
             return;
         }
-        head->prev = n;
-        n->next = head;
-        head = n;
+        head->prev = node;
+        node->next = head;
+        head = node;
         size++;
     }
     ListNode* pop() {
