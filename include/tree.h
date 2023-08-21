@@ -7,14 +7,14 @@ using namespace std;
 class TreeNode {
   public:
     int num;
-    int height;
+    int height; // for self-balance tree
     TreeNode* left;
     TreeNode* right;
     TreeNode(void) : num(0), height(-1), left(nullptr), right(nullptr) {}
     TreeNode(int num) : num(num), height(-1), left(nullptr), right(nullptr) {}
-    int get_height(void) { return height; }
-    void set_height(int h) { height = h; }
-    void update_height(TreeNode* node) {
+    int get_height(void) { return height; } // for self-balance tree
+    void set_height(int h) { height = h; }  // for self-balance tree
+    void update_height(TreeNode* node) {    // for self-balance tree
         if (!node) {
             return;
         }
@@ -34,7 +34,7 @@ class TreeNode {
         }
         node->set_height(1 + (left_h > right_h ? left_h : right_h));
     }
-    void update_height(void) { update_height(this); }
+    void update_height(void) { update_height(this); } // for self-balance tree
 };
 
 class TreeBase {
@@ -47,12 +47,6 @@ class TreeBase {
     TreeNode* findMin(TreeNode* node) {
         while (node->left != nullptr) {
             node = node->left;
-        }
-        return node;
-    }
-    TreeNode* findMax(TreeNode* node) {
-        while (node->right != nullptr) {
-            node = node->right;
         }
         return node;
     }
