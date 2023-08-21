@@ -46,7 +46,7 @@ int main(void) {
     Dlist.printAll();
     cout << endl;
 
-    /*----------------------------stack and queue --------------------------*/
+    /*---------------------------- stack and queue --------------------------*/
 
     Stack stack;
     Queue queue;

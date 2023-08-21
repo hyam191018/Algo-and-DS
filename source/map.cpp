@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    srand(time(nullptr)); // 初始化隨機種子
+    srand(time(nullptr));
 
     HashMap map(30);
 

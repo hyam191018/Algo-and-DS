@@ -4,7 +4,7 @@
 int main(void) {
     Item item(10, -20, 20);
 
-    cout << "<< 正向測試 >>" << endl << endl;
+    cout << "<< Functional Testing >>" << endl << endl;
 
     cout << "# Testing bubble sort" << endl;
     cout << "Before sort: ";
@@ -54,7 +54,7 @@ int main(void) {
     item.show_result();
     cout << endl;
 
-    cout << "<< 時間測試 >>" << endl << endl;
+    cout << "<< Stress Testing >>" << endl << endl;
     Item item2(10000, -10000, 10000);
 
     cout << "# Testing bubble sort" << endl;
