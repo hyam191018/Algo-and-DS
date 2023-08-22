@@ -1,19 +1,18 @@
-#include "../include/list.h"
-#include <cstdlib> // 為 rand() 和 srand()
-#include <ctime>   // 為 time()
+#include "../include/hashMap.h"
+#include <ctime> // for time
 #include <iostream>
-#include <string>
-
 using namespace std;
 
 int main() {
     srand(time(nullptr));
 
     HashMap map(30);
+    const int round = 10;
+    cout << "<< Testing Hash map >>" << endl << endl;
 
-    cout << "<< Testing Hash map >>" << endl;
-    for (int i = 0; i < 5; i++) {
-        string key = "key_" + to_string(rand() % 10);
+    cout << endl << "# Inserting" << endl;
+    for (int i = 0; i < round; i++) {
+        string key = "key_" + to_string(rand() % round);
         int value = rand() % 100;
         if (map.insert(key, value)) {
             cout << "Insert "
@@ -21,24 +20,28 @@ int main() {
         }
     }
 
+    cout << endl << "# Searching" << endl;
     int value;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < round; i++) {
         string key = "key_" + to_string(i);
-        if (map.lookup(key, value)) {
+        if (map.search(key, value)) {
             cout << "Value for key '" << key << "' in map: " << value << endl;
         }
     }
 
-    for (int i = 0; i < 5; i++) {
-        string key = "key_" + to_string(rand() % 10);
+    cout << endl << "# Removing" << endl;
+    for (int i = 0; i < round / 2; i++) {
+        string key = "key_" + to_string(rand() % round);
         if (map.remove(key)) {
             cout << "Remove " << key << endl;
         }
     }
 
+    cout << endl << "# Show mapping" << endl;
     map.showMap();
     // 清空 HashMap
     map.clear();
+    map.showMap();
 
     return 0;
 }

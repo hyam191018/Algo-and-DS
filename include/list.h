@@ -64,13 +64,13 @@ class LinkedListBase {
  * @fn sort - 將此list進行選擇排序
  * - 新增 ---------------
  * @fn search
- * - @param 查找的數字
+ * - @param n 查找的數字
  * - @return true 如果數字存在
  * - @return false 如果數字不存在
  * @fn insert
- * - @param 新增數字
+ * - @param n 新增數字
  * @fn remove
- * - @param 欲刪除的數字
+ * - @param n 欲刪除的數字
  * - @return true 如果成功刪除
  * - @return false 如果數字不存在
  */
@@ -140,9 +140,9 @@ class SinglyLinkedList : public LinkedListBase {
  * @fn search - 查找成員是否存在
  * - 覆寫 ---------------
  * @fn insert
- * - @param 新增數字
+ * - @param n 新增數字
  * @fn remove
- * - @param 欲刪除的數字
+ * - @param n 欲刪除的數字
  * - @return true 如果成功刪除
  * - @return false 如果數字不存在
  * @fn printAllInv 反向印出所有元素
@@ -212,6 +212,7 @@ class DoublyLinkedList : public SinglyLinkedList {
  * 以 Singly linked list 實現 stack  (FILO) 使用push的話，成員可重複
  * - 新增 ---------------
  * @fn push - 將數字串接到list前端
+ * - @param n 目標數字
  * @fn pop - 從list前端移出數字
  * - @return Node，需要手動釋放
  */
@@ -228,7 +229,7 @@ class Stack : public SinglyLinkedList {
         head = node;
         size++;
     }
-    ListNode* pop() {
+    ListNode* pop(void) {
         if (size == 0) {
             return nullptr;
         }
@@ -243,6 +244,7 @@ class Stack : public SinglyLinkedList {
  * 以 Doubly linked list 實現 queue  (FIFO) 使用push的話，成員可重複
  * - 新增 ---------------
  * @fn push - 將數字串接到list前端
+ * - @param n 目標數字
  * @fn pop - 從list末端移出數字
  * - @return Node，需要手動釋放
  */
@@ -260,7 +262,7 @@ class Queue : public DoublyLinkedList {
         head = node;
         size++;
     }
-    ListNode* pop() {
+    ListNode* pop(void) {
         if (size == 0) {
             return nullptr;
         }
