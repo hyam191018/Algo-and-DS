@@ -1,4 +1,5 @@
 #include "../include/array.h"
+#include "../include/sort.h"
 #include "../include/timer.h"
 
 int main(void) {
@@ -9,7 +10,7 @@ int main(void) {
     cout << "# Testing bubble sort" << endl;
     cout << "Before sort: ";
     array.showArray();
-    array.bubbleSort();
+    Sorting::bubbleSort(array.origin, array.result, array.len);
     cout << "After sort:  ";
     array.showResult();
     cout << endl;
@@ -17,7 +18,7 @@ int main(void) {
     cout << "# Testing insertion sort" << endl;
     cout << "Before sort: ";
     array.showArray();
-    array.insertionSort();
+    Sorting::insertionSort(array.origin, array.result, array.len);
     cout << "After sort:  ";
     array.showResult();
     cout << endl;
@@ -25,7 +26,7 @@ int main(void) {
     cout << "# Testing counting sort" << endl;
     cout << "Before sort: ";
     array.showArray();
-    array.countingSort();
+    Sorting::countingSort(array.origin, array.result, array.len, array.min, array.max);
     cout << "After sort:  ";
     array.showResult();
     cout << endl;
@@ -33,7 +34,7 @@ int main(void) {
     cout << "# Testing merge sort" << endl;
     cout << "Before sort: ";
     array.showArray();
-    array.mergeSort();
+    Sorting::mergeSort(array.origin, array.result, array.len);
     cout << "After sort:  ";
     array.showResult();
     cout << endl;
@@ -41,7 +42,7 @@ int main(void) {
     cout << "# Testing selection sort" << endl;
     cout << "Before sort: ";
     array.showArray();
-    array.selectionSort();
+    Sorting::selectionSort(array.origin, array.result, array.len);
     cout << "After sort:  ";
     array.showResult();
     cout << endl;
@@ -49,7 +50,7 @@ int main(void) {
     cout << "# Testing quick sort" << endl;
     cout << "Before sort: ";
     array.showArray();
-    array.quickSort();
+    Sorting::quickSort(array.origin, array.result, array.len);
     cout << "After sort:  ";
     array.showResult();
     cout << endl;
@@ -59,37 +60,37 @@ int main(void) {
 
     cout << "# Testing bubble sort" << endl;
     auto time = timerStart();
-    array2.bubbleSort();
+    Sorting::bubbleSort(array2.origin, array2.result, array2.len);
     timerEnd(time);
     cout << endl;
 
     cout << "# Testing insertion sort" << endl;
     time = timerStart();
-    array2.insertionSort();
+    Sorting::insertionSort(array2.origin, array2.result, array2.len);
     timerEnd(time);
     cout << endl;
 
     cout << "# Testing counting sort" << endl;
     time = timerStart();
-    array2.countingSort();
+    Sorting::countingSort(array2.origin, array2.result, array2.len, array2.min, array2.max);
     timerEnd(time);
     cout << endl;
 
     cout << "# Testing merge sort" << endl;
     time = timerStart();
-    array2.mergeSort();
+    Sorting::mergeSort(array2.origin, array2.result, array2.len);
     timerEnd(time);
     cout << endl;
 
     cout << "# Testing selection sort" << endl;
     time = timerStart();
-    array2.selectionSort();
+    Sorting::selectionSort(array2.origin, array2.result, array2.len);
     timerEnd(time);
     cout << endl;
 
     cout << "# Testing quick sort" << endl;
     time = timerStart();
-    array2.quickSort();
+    Sorting::quickSort(array2.origin, array2.result, array2.len);
     timerEnd(time);
     cout << endl;
 }
