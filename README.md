@@ -68,6 +68,9 @@ stack跟queue只有在刪除第一個(或最後一個)元素時才能達到O(1)�
 | 最差  | O(n)  | O(logn)  | O(logn)  | O(n)  |
 
 BST跟Splay tree在某些情況可能會變成Linked list，導致存取效率變成O(n)，其他普遍都是趨近O(logn)，BST是最基本的實現，而AVL tree、RB tree與Splay tree都有各自的優點:
+
 AVL tree保證了平衡性(左右子樹最多相差1)，能最有效率的提升search速度，但在insert與remove時，需額外花時間做平衡。
+
 RB tree犧牲了一點平衡性(左右子樹最多相差1倍)，雖然降低了search的速度，但提昇了insert與remove的速度，因為不會每次操作都要平衡。
+
 Splay tree最大的優點就是越常存取的node會越靠近root，非常適合用作cache的設計。
