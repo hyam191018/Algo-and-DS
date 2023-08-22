@@ -1,25 +1,33 @@
 #ifndef SORT_H
 #define SORT_H
 
-#include <cstring>
-#include <ctime>
-#include <iostream>
+#include <cstring>  // for memcpy
+#include <iostream> // for swap
 using namespace std;
 
+/**
+ * 基本的排序方法
+ * @fn bubbleSort - O(n^2)
+ * @fn insertionSort - O(n^2)
+ * @fn countingSort - O(n+k) k 為max-min+1
+ * @fn mergeSort - O(nlogn)
+ * @fn selectionSort - O(n^2)
+ * @fn quickSort - O(nlogn)
+ */
 class Sorting {
   private:
     // 將一個array分成左右兩個array
-    static void merge_sort_divide(int* array, int* result, int len) {
+    static void mergeSort_divide(int* array, int* result, int len) {
         if (len <= 1) {
             return;
         }
         int mid = len / 2;
-        merge_sort_divide(array, result, mid);
-        merge_sort_divide(array + mid, result + mid, len - mid);
-        merge_sort_conquer(array, result, 0, mid, len);
+        mergeSort_divide(array, result, mid);
+        mergeSort_divide(array + mid, result + mid, len - mid);
+        mergeSort_conquer(array, result, 0, mid, len);
     }
     // 左右兩個array都已排序好，合併到result，再複製回array
-    static void merge_sort_conquer(int* array, int* result, int left, int right, int len) {
+    static void mergeSort_conquer(int* array, int* result, int left, int right, int len) {
         int left_len = right;
         int left_index = 0;
         int right_len = len - left_len;
@@ -42,7 +50,7 @@ class Sorting {
         }
         memcpy(array, result, len * sizeof(int));
     }
-    static void _quick_sort(int* array, int len) {
+    static void _quickSort(int* array, int len) {
         if (len < 2) {
             return;
         }
@@ -61,14 +69,13 @@ class Sorting {
         }
         // 最後跟store交換回正確的位置
         swap(array[store], array[len - 1]);
-
         // 左右繼續遞迴
-        _quick_sort(array, store);
-        _quick_sort(array + store + 1, len - store - 1);
+        _quickSort(array, store);
+        _quickSort(array + store + 1, len - store - 1);
     }
 
   public:
-    static void bubble_sort(int* array, int* result, int len) {
+    static void bubbleSort(int* array, int* result, int len) {
         memcpy(result, array, len * sizeof(int));
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len; j++) {
@@ -78,7 +85,7 @@ class Sorting {
             }
         }
     }
-    static void insertion_sort(int* array, int* result, int len) {
+    static void insertionSort(int* array, int* result, int len) {
         memcpy(result, array, len * sizeof(int));
         for (int i = 1; i < len; i++) {
             // 從右向左掃秒
@@ -90,7 +97,7 @@ class Sorting {
             }
         }
     }
-    static void counting_sort(int* array, int* result, int len, int min, int max) {
+    static void countingSort(int* array, int* result, int len, int min, int max) {
         int range = max - min + 1;
         int* counter = new int[range];
         fill(counter, counter + range, 0);
@@ -109,23 +116,23 @@ class Sorting {
         }
         delete[] counter;
     }
-    static void merge_sort(int* array, int* result, int len) {
+    static void mergeSort(int* array, int* result, int len) {
         // backup
         int* tmp = new int[len];
         memcpy(tmp, array, len * sizeof(int));
         // Top-down
         int mid = len / 2;
         // left array 0~mid
-        merge_sort_divide(array, result, mid);
+        mergeSort_divide(array, result, mid);
         // right array mid+1~len
-        merge_sort_divide(array + mid, result + mid, len - mid);
+        mergeSort_divide(array + mid, result + mid, len - mid);
         // merge
-        merge_sort_conquer(array, result, 0, mid, len);
+        mergeSort_conquer(array, result, 0, mid, len);
         // return
         memcpy(array, tmp, len * sizeof(int));
         delete[] tmp;
     }
-    static void selection_sort(int* array, int* result, int len) {
+    static void selectionSort(int* array, int* result, int len) {
         memcpy(result, array, len * sizeof(int));
         for (int i = 0; i < len; i++) {
             int min = i;
@@ -137,70 +144,10 @@ class Sorting {
             swap(result[i], result[min]);
         }
     }
-    static void quick_sort(int* array, int* result, int len) {
+    static void quickSort(int* array, int* result, int len) {
         memcpy(result, array, len * sizeof(int));
-        _quick_sort(result, len);
+        _quickSort(result, len);
     }
-};
-
-class Array {
-  private:
-    int* array;
-    int* result;
-    unsigned len;
-    int min;
-    int max;
-    void assign(void) {
-        for (int i = 0; i < len; i++) {
-            array[i] = rand() % (max - min + 1) + min;
-        }
-    }
-
-  public:
-    Array(void) : len(10), min(-10), max(10) {
-        srand(time(NULL));
-        array = new int[len];
-        result = new int[len];
-        assign();
-    }
-    Array(int len) : len(len), min(0), max(100) {
-        srand(time(NULL));
-        array = new int[len];
-        result = new int[len];
-        assign();
-    }
-    Array(int len, int min, int max) : len(len), min(min), max(max) {
-        srand(time(NULL));
-        if (this->min > this->max) {
-            cout << "Error: minimum is bigger than maximum. (so I swapped them)" << endl;
-            swap(this->min, this->max);
-        }
-        array = new int[len];
-        result = new int[len];
-        assign();
-    }
-    ~Array(void) {
-        delete[] array;
-        delete[] result;
-    }
-    void show_array(void) {
-        for (int i = 0; i < len; i++) {
-            cout << array[i] << " ";
-        }
-        cout << endl;
-    }
-    void show_result(void) {
-        for (int i = 0; i < len; i++) {
-            cout << result[i] << " ";
-        }
-        cout << endl;
-    }
-    void bubble_sort(void) { Sorting::bubble_sort(array, result, len); }
-    void insertion_sort(void) { Sorting::insertion_sort(array, result, len); }
-    void counting_sort(void) { Sorting::counting_sort(array, result, len, min, max); }
-    void merge_sort(void) { Sorting::merge_sort(array, result, len); }
-    void selection_sort(void) { Sorting::selection_sort(array, result, len); }
-    void quick_sort(void) { Sorting::quick_sort(array, result, len); }
 };
 
 #endif
