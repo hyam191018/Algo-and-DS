@@ -4,35 +4,18 @@
 #include <iostream>
 using namespace std;
 
-struct ListNode {
+class ListNode {
+  public:
     int num;
     ListNode* next;
     ListNode* prev;
+    ListNode(int num) : num(num), next(nullptr), prev(nullptr) {}
 };
 
 class LinkedListBase {
   protected:
     ListNode* head;
     int size;
-
-  public:
-    LinkedListBase() : head(nullptr), size(0) {} // 使用nullptr取代NULL
-    ListNode* create_node(int num) {
-        ListNode* n = new ListNode;
-        n->num = num;
-        n->next = n->prev = NULL;
-    }
-    int length() const { return size; }
-    bool isEmpty() const { return size == 0; }
-    void printAll() const {
-        ListNode* tmp = head;
-        cout << "List all: ";
-        while (tmp) {
-            cout << tmp->num << " ";
-            tmp = tmp->next;
-        }
-        cout << endl;
-    }
     void swapValue(ListNode* a, ListNode* b) {
         int tmp = a->num;
         a->num = b->num;
@@ -49,6 +32,20 @@ class LinkedListBase {
         }
         return min;
     }
+
+  public:
+    LinkedListBase(void) : head(nullptr), size(0) {} // 使用nullptr取代NULL
+    int length(void) const { return size; }
+    bool isEmpty(void) const { return size == 0; }
+    void printAll(void) const {
+        ListNode* tmp = head;
+        cout << "List all: ";
+        while (tmp) {
+            cout << tmp->num << " ";
+            tmp = tmp->next;
+        }
+        cout << endl;
+    }
     void sort(void) { // selection sort
         ListNode* tar = head;
         while (tar) {
@@ -58,6 +55,25 @@ class LinkedListBase {
     }
 };
 
+/**
+ * 建立 Singly linked list，可使用以下 function (成員不可重複)
+ * - 基本 ---------------
+ * @fn length - 回傳長度
+ * @fn isEmpty - 判斷是否為空
+ * @fn printAll - 列出所有元素
+ * @fn sort - 將此list進行選擇排序
+ * - 新增 ---------------
+ * @fn search
+ * - @param 查找的數字
+ * - @return true 如果數字存在
+ * - @return false 如果數字不存在
+ * @fn insert
+ * - @param 新增數字
+ * @fn remove
+ * - @param 欲刪除的數字
+ * - @return true 如果成功刪除
+ * - @return false 如果數字不存在
+ */
 class SinglyLinkedList : public LinkedListBase {
   public:
     bool search(int n) {
@@ -77,7 +93,7 @@ class SinglyLinkedList : public LinkedListBase {
         if (search(n)) {
             return;
         }
-        ListNode* node = create_node(n);
+        ListNode* node = new ListNode(n);
         if (size == 0) {
             head = node;
             size = 1;
@@ -114,30 +130,34 @@ class SinglyLinkedList : public LinkedListBase {
     }
 };
 
-class DoublyLinkedList : public LinkedListBase {
+/**
+ * 建立 Doubly linked list，可使用以下 function (成員不可重複)
+ * - 基本 ---------------
+ * @fn length - 回傳長度
+ * @fn isEmpty - 判斷是否為空
+ * @fn printAll - 列出所有元素
+ * @fn sort - 將此list進行選擇排序
+ * @fn search - 查找成員是否存在
+ * - 覆寫 ---------------
+ * @fn insert
+ * - @param 新增數字
+ * @fn remove
+ * - @param 欲刪除的數字
+ * - @return true 如果成功刪除
+ * - @return false 如果數字不存在
+ * @fn printAllInv 反向印出所有元素
+ */
+class DoublyLinkedList : public SinglyLinkedList {
   protected:
     ListNode* tail;
 
   public:
     DoublyLinkedList() : tail(nullptr) {}
-    bool search(int n) {
-        if (size == 0) {
-            return false;
-        }
-        ListNode* tmp = head;
-        while (tmp) {
-            if (tmp->num == n) {
-                return true;
-            }
-            tmp = tmp->next;
-        }
-        return false;
-    }
     void insert(int n) {
         if (search(n)) { // 重複
             return;
         }
-        ListNode* node = create_node(n);
+        ListNode* node = new ListNode(n);
         if (size == 0) {
             head = tail = node;
             size = 1;
@@ -177,7 +197,7 @@ class DoublyLinkedList : public LinkedListBase {
         }
         return false;
     }
-    void printAllInv() const {
+    void printAllInv(void) {
         ListNode* tmp = tail;
         cout << "List all invert: ";
         while (tmp) {
@@ -188,10 +208,17 @@ class DoublyLinkedList : public LinkedListBase {
     }
 };
 
+/**
+ * 以 Singly linked list 實現 stack  (FILO) 使用push的話，成員可重複
+ * - 新增 ---------------
+ * @fn push - 將數字串接到list前端
+ * @fn pop - 從list前端移出數字
+ * - @return Node，需要手動釋放
+ */
 class Stack : public SinglyLinkedList {
   public:
     void push(int n) {
-        ListNode* node = create_node(n);
+        ListNode* node = new ListNode(n);
         if (size == 0) {
             head = node;
             size = 1;
@@ -212,10 +239,17 @@ class Stack : public SinglyLinkedList {
     }
 };
 
+/**
+ * 以 Doubly linked list 實現 queue  (FIFO) 使用push的話，成員可重複
+ * - 新增 ---------------
+ * @fn push - 將數字串接到list前端
+ * @fn pop - 從list末端移出數字
+ * - @return Node，需要手動釋放
+ */
 class Queue : public DoublyLinkedList {
   public:
     void push(int n) {
-        ListNode* node = create_node(n);
+        ListNode* node = new ListNode(n);
         if (size == 0) {
             head = tail = node;
             size = 1;
@@ -239,113 +273,6 @@ class Queue : public DoublyLinkedList {
         }
         size--;
         return n;
-    }
-};
-
-int hash_function(string key, int mod) {
-    int hash = 0;
-    for (char c : key) {
-        hash += static_cast<int>(c);
-    }
-    return hash % mod;
-}
-
-class HashNode {
-  public:
-    string key;
-    int value;
-    bool used;
-    HashNode(void) : key(""), value(0), used(false) {}
-    bool isUsed(void) { return used; }
-};
-
-class HashMap : public HashNode {
-  private:
-    HashNode* array;
-    int array_len;
-
-  public:
-    HashMap(void) {
-        array = new HashNode[10];
-        array_len = 10;
-    }
-    HashMap(int len) {
-        array = new HashNode[len];
-        array_len = len;
-    }
-    ~HashMap(void) { delete[] array; }
-    void showMap(void) {
-        for (int i = 0; i < array_len; i++) {
-            if (!array[i].isUsed())
-                continue;
-            cout << "key: " << array[i].key << ", value: " << array[i].value << endl;
-        }
-    }
-    bool insert(string key, int value) {
-        int h = hash_function(key, array_len);
-        for (int i = 0; i < array_len; i++) {
-            int point = (h + i) % array_len;
-
-            if (array[point].isUsed()) {
-                if (!array[point].key.compare(key)) { // update
-                    array[point].value = value;
-                    return true;
-                } else { // collision
-                    continue;
-                }
-            } else { // insert
-                array[point].key = key;
-                array[point].value = value;
-                array[point].used = true;
-                return true;
-            }
-        }
-        return false;
-    }
-    bool lookup(string key, int& value) {
-        int h = hash_function(key, array_len);
-        for (int i = 0; i < array_len; i++) {
-            int point = (h + i) % array_len;
-
-            if (array[point].isUsed()) {
-                if (!array[point].key.compare(key)) { // find
-                    value = array[point].value;
-                    return true;
-                } else { // collision
-                    continue;
-                }
-            } else {
-                break;
-            }
-        }
-        return false;
-    }
-    bool remove(string key) {
-        int h = hash_function(key, array_len);
-        for (int i = 0; i < array_len; i++) {
-            int point = (h + i) % array_len;
-
-            if (array[point].isUsed()) {
-                if (!array[point].key.compare(key)) { // find and then remove
-                    array[point].key = "";
-                    array[point].value = 0;
-                    array[point].used = false;
-                    return true;
-                } else { // collision
-                    continue;
-                }
-            } else {
-                break;
-            }
-        }
-        return false;
-    }
-    void clear(void) {
-        for (int i = 0; i < array_len; i++) {
-            array[i].key = "";
-            array[i].value = 0;
-            array[i].used = false;
-        }
     }
 };
 

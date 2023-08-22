@@ -8,7 +8,7 @@ int main(void) {
 
     SinglyLinkedList Slist;
     DoublyLinkedList Dlist;
-    const int round = 10;
+    const int round = 50;
     cout << "<< Testing Singly and Doubly linked list >>" << endl << endl;
 
     cout << "# Inserting" << endl;
@@ -17,6 +17,14 @@ int main(void) {
         Slist.insert(num);
         Dlist.insert(num);
     }
+
+    Slist.printAll();
+    Dlist.printAll();
+    cout << endl;
+
+    cout << "# Sorting" << endl;
+    Slist.sort();
+    Dlist.sort();
 
     Slist.printAll();
     Dlist.printAll();
@@ -44,8 +52,6 @@ int main(void) {
     Slist.printAll();
     Dlist.printAll();
     cout << endl;
-
-    /*---------------------------- stack and queue --------------------------*/
 
     Stack stack;
     Queue queue;
