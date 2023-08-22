@@ -1,6 +1,7 @@
 #ifndef SORT_H
 #define SORT_H
 
+#include "heap.h"   // for heap sort
 #include <cstring>  // for memcpy
 #include <iostream> // for swap
 using namespace std;
@@ -147,6 +148,16 @@ class Sorting {
     static void quickSort(int* array, int* result, int len) {
         memcpy(result, array, len * sizeof(int));
         _quickSort(result, len);
+    }
+    static void heapSort(int* array, int* result, int len) {
+        MinHeap heap(len);
+        for (int i = 0; i < len; i++) {
+            heap.insert(array[i]);
+        }
+        for (int i = 0; i < len; i++) {
+            result[i] = heap.findMin();
+            heap.remove();
+        }
     }
 };
 

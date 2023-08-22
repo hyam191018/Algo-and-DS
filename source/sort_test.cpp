@@ -55,6 +55,14 @@ int main(void) {
     array.showResult();
     cout << endl;
 
+    cout << "# Testing heap sort" << endl;
+    cout << "Before sort: ";
+    array.showArray();
+    Sorting::heapSort(array.origin, array.result, array.len);
+    cout << "After sort:  ";
+    array.showResult();
+    cout << endl;
+
     cout << "<< Stress Testing >>" << endl << endl;
     Array array2(10000, -10000, 10000);
 
@@ -91,6 +99,12 @@ int main(void) {
     cout << "# Testing quick sort" << endl;
     time = timerStart();
     Sorting::quickSort(array2.origin, array2.result, array2.len);
+    timerEnd(time);
+    cout << endl;
+
+    cout << "# Testing heap sort" << endl;
+    time = timerStart();
+    Sorting::heapSort(array2.origin, array2.result, array2.len);
     timerEnd(time);
     cout << endl;
 }
