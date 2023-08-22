@@ -21,10 +21,10 @@
 - Skip List ~TODO
   
 (4) Heap
-- Max heap ~TODO
-- Min heap ~TODO
+- Max heap
+- Min heap
+- Heap sort : O(nlogn)
 - Priority queue ~TODO
-- Heap sort : O(nlogn) ~TODO
 
 (5) Tree
 - Binary search tree
