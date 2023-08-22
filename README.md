@@ -23,7 +23,7 @@
 (4) Heap
 - Max heap
 - Min heap
-- Heap sort : O(nlogn)
+- Heap sort : O(nlogn) 註: 在 sort.h
 - Priority queue ~TODO
 
 (5) Tree
