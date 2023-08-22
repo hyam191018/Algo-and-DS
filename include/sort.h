@@ -143,7 +143,7 @@ class Sorting {
     }
 };
 
-class Item {
+class Array {
   private:
     int* array;
     int* result;
@@ -157,19 +157,19 @@ class Item {
     }
 
   public:
-    Item(void) : len(10), min(-10), max(10) {
+    Array(void) : len(10), min(-10), max(10) {
         srand(time(NULL));
         array = new int[len];
         result = new int[len];
         assign();
     }
-    Item(int len) : len(len), min(0), max(100) {
+    Array(int len) : len(len), min(0), max(100) {
         srand(time(NULL));
         array = new int[len];
         result = new int[len];
         assign();
     }
-    Item(int len, int min, int max) : len(len), min(min), max(max) {
+    Array(int len, int min, int max) : len(len), min(min), max(max) {
         srand(time(NULL));
         if (this->min > this->max) {
             cout << "Error: minimum is bigger than maximum. (so I swapped them)" << endl;
@@ -179,7 +179,7 @@ class Item {
         result = new int[len];
         assign();
     }
-    ~Item(void) {
+    ~Array(void) {
         delete[] array;
         delete[] result;
     }
