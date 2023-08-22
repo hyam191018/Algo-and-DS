@@ -1,5 +1,5 @@
-#include "../include/tree.h"
 #include "../include/list.h"
+#include "../include/tree.h"
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -32,9 +32,9 @@ int main() {
     avl.printTree();
     cout << " ------------------------------------------- " << endl;
     cout << "BST  all: ";
-    bst.inorder_traversal();
+    bst.inorderTraversal();
     cout << "AVL  all: ";
-    avl.inorder_traversal();
+    avl.inorderTraversal();
     list.sort();
     list.printAll();
 

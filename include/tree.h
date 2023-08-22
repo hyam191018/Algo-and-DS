@@ -4,6 +4,14 @@
 #include <iostream>
 using namespace std;
 
+/**
+ * 定義一個BST的node
+ * @param num 儲存的數(key)
+ * @param height 該節點在整個樹中的高度
+ * @param left left node
+ * @param right right node
+ * @fn updateHeight - 重新計算此node的高度
+ */
 class TreeNode {
   public:
     int num;
@@ -12,44 +20,49 @@ class TreeNode {
     TreeNode* right;
     TreeNode(void) : num(0), height(-1), left(nullptr), right(nullptr) {}
     TreeNode(int num) : num(num), height(-1), left(nullptr), right(nullptr) {}
-    int get_height(void) { return height; } // for self-balance tree
-    void set_height(int h) { height = h; }  // for self-balance tree
-    void update_height(TreeNode* node) {    // for self-balance tree
+    void updateHeight(TreeNode* node) { // for self-balance tree
         if (!node) {
             return;
         }
         if (!node->left && !node->right) {
-            node->set_height(0);
+            node->height = 0;
             return;
         }
 
-        update_height(node->left);
-        update_height(node->right);
+        updateHeight(node->left);
+        updateHeight(node->right);
         int right_h = -1, left_h = -1;
         if (node->left) {
-            left_h = (node->left)->get_height();
+            left_h = (node->left)->height;
         }
         if (node->right) {
-            right_h = (node->right)->get_height();
+            right_h = (node->right)->height;
         }
-        node->set_height(1 + (left_h > right_h ? left_h : right_h));
+        node->height = 1 + (left_h > right_h ? left_h : right_h);
     }
-    void update_height(void) { update_height(this); } // for self-balance tree
+    void updateHeight(void) { updateHeight(this); } // for self-balance tree
 };
 
+/**
+ * 定義一個Binear tree的基本功能
+ * @param root 整棵樹的根結點
+ * @fn printTree - 輸出整棵樹的結構
+ * @fn inorderTraversal- 從小到大印出樹的node value
+ * @fn inorderTraversalInv- 從大到小印出樹的node value
+ */
 class TreeBase {
   protected:
     TreeNode* root;
     int node_num;
-
-  public:
-    TreeBase(void) : root(nullptr), node_num(0) {}
     TreeNode* findMin(TreeNode* node) {
         while (node->left != nullptr) {
             node = node->left;
         }
         return node;
     }
+
+  public:
+    TreeBase(void) : root(nullptr), node_num(0) {}
     void printTree(TreeNode* node, string prefix = "", bool isLeft = true) {
         if (node == nullptr) {
             return;
@@ -64,20 +77,36 @@ class TreeBase {
         printTree(node->left, prefix + (isLeft ? "    " : "│   "), true);
     }
     void printTree(void) { printTree(root); }
-    void inorder_traversal(TreeNode* node) {
+    void inorderTraversal(TreeNode* node) {
         if (!node)
             return;
-        inorder_traversal(node->left);
+        inorderTraversal(node->left);
         cout << node->num << " ";
-        inorder_traversal(node->right);
+        inorderTraversal(node->right);
     }
-    void inorder_traversal(void) {
-        inorder_traversal(root);
+    void inorderTraversalInv(TreeNode* node) {
+        if (!node)
+            return;
+        inorderTraversalInv(node->right);
+        cout << node->num << " ";
+        inorderTraversalInv(node->left);
+    }
+    void inorderTraversal(void) {
+        inorderTraversal(root);
         cout << endl;
     }
-    int size(void) { return node_num; }
+    void inorderTraversalInv(void) {
+        inorderTraversalInv(root);
+        cout << endl;
+    }
 };
 
+/**
+ * 定義一個BST的基本功能
+ * @fn insert - 插入一個數到BST
+ * @fn search - 在BST找尋一個數
+ * @fn remove - 從BST移除一個數
+ */
 class BinarySearchTree : public TreeBase {
   protected:
     TreeNode* insert(TreeNode* node, int num) {
@@ -144,6 +173,13 @@ class BinarySearchTree : public TreeBase {
 
 /** -----------------------------------------------------------------*/
 
+/**
+ * AVL樹是BST的進階版，在每一次的insert與remove都會自動調整樹的平衡，雖然降低了一些insert與remove的效能
+ * 但是能有效提升search的速度
+ * @fn insert - 插入一個數到AVLTree(相比BST多了修改樹高跟重新平衡)
+ * @fn search - 在AVLTree找尋一個數
+ * @fn remove - 從AVTTree移除一個數(相比BST多了修改樹高跟重新平衡)
+ */
 class AVLTree : public BinarySearchTree {
   protected:
     int balance_factor(TreeNode* node) {
@@ -151,8 +187,8 @@ class AVLTree : public BinarySearchTree {
             return 0;
         }
 
-        int left_height = (node->left ? (node->left)->get_height() : -1);
-        int right_height = (node->right ? (node->right)->get_height() : -1);
+        int left_height = (node->left ? (node->left)->height : -1);
+        int right_height = (node->right ? (node->right)->height : -1);
 
         return left_height - right_height;
     }
@@ -168,7 +204,7 @@ class AVLTree : public BinarySearchTree {
         new_node->left = node;
         return new_node;
     }
-    void update_treeHeight(TreeNode* node) { node->update_height(); }
+    void update_treeHeight(TreeNode* node) { node->updateHeight(); }
     TreeNode* update_treeBalance(TreeNode* node) {
         if (!node) {
             return nullptr;
