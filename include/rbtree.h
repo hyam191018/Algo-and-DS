@@ -15,7 +15,11 @@ class RBTreeNode {
 
   public:
     RBTreeNode(void) : num(0), parent(nullptr), left(nullptr), right(nullptr), color(true) {}
-    RBTreeNode(int num) : num(num), parent(nullptr), left(nullptr), right(nullptr), color(true) {}
+    // for root
+    RBTreeNode(int num) : num(num), parent(nullptr), left(nullptr), right(nullptr), color(false) {}
+    // for the other
+    RBTreeNode(int num, RBTreeNode* parent)
+        : num(num), parent(parent), left(nullptr), right(nullptr), color(true) {}
     // Getter
     int getNum(void) { return num; }
     bool isRed(void) { return this->color; }
@@ -43,47 +47,72 @@ class RBTreeNode {
  * @fn insert 插入一個數字到RB tree
  * @fn remove 將一個數字節點移除
  */
-class RBTree {
+class RedBlackTree {
   private:
     RBTreeNode* root;
     int node_number;
-    void printTree(RBTreeNode* node, string prefix = "", bool isLeft = true,
-                   bool isNum = true /* ture for number, false for color*/);
+    void printTree(RBTreeNode* node, string prefix, bool isLeft,
+                   bool isNum /* ture for number, false for color*/);
     void inorderTraversal(RBTreeNode* node);
     RBTreeNode* search(RBTreeNode* node, int num); // 返回目標節點位置，或是nullptrt
-    RBTreeNode* insert(RBTreeNode* node, int num); // 返回新的subtree root
-    RBTreeNode* remove(RBTreeNode* node, int num); // 返回新的subtree root
+    RBTreeNode* insert(RBTreeNode* node, RBTreeNode* parent, int num); // 返回新的subtree root
+    RBTreeNode* remove(RBTreeNode* node, int num);                     // 返回新的subtree root
 
   public:
-    RBTree(void) : root(nullptr), node_number(0) {}
+    RedBlackTree(void) : root(nullptr), node_number(0) {}
     void printTree(void) { printTree(root, "", true, true); }
     void printColor(void) { printTree(root, "", true, false); }
     void inorderTraversal(void) { inorderTraversal(root); }
     bool search(int num) { return search(root, num); }
-    void insert(int num) { root = insert(root, num); }
+    void insert(int num) { root = insert(root, nullptr, num); }
     void remove(int num) { root = remove(root, num); }
 };
 
-void RBTree::printTree(RBTreeNode* node, string prefix = "", bool isLeft = true, bool isNum) {
+void RedBlackTree::printTree(RBTreeNode* node, string prefix = "", bool isLeft = true,
+                             bool isNum = true) {
     if (!node) {
         return;
     }
     printTree(node->getRight(), prefix + (isLeft ? "│   " : "    "), false, isNum);
     cout << prefix;
     cout << (isLeft ? "└── " : "┌── ");
-    cout << node->getNum() << endl;
+    cout << (isNum ? to_string(node->getNum()) : (node->isRed() ? "R" : "B")) << endl;
     printTree(node->getLeft(), prefix + (isLeft ? "    " : "│   "), true, isNum);
 }
-void RBTree::inorderTraversal(RBTreeNode* node) {
-    if (!node)
+void RedBlackTree::inorderTraversal(RBTreeNode* node) {
+    if (!node) {
         return;
+    }
     inorderTraversal(node->getLeft());
     cout << node->getNum() << " ";
     inorderTraversal(node->getRight());
 }
-
-RBTreeNode* RBTree::search(RBTreeNode* node, int num) { return nullptr; }
-RBTreeNode* RBTree::insert(RBTreeNode* node, int num) { return nullptr; }
-RBTreeNode* RBTree::remove(RBTreeNode* node, int num) { return nullptr; }
+RBTreeNode* RedBlackTree::search(RBTreeNode* node, int num) {
+    if (!node) {
+        return nullptr;
+    }
+    if (num > node->getNum()) {
+        return search(node->getLeft(), num);
+    } else if (num < node->getNum()) {
+        return search(node->getRight(), num);
+    }
+    return node;
+}
+RBTreeNode* RedBlackTree::insert(RBTreeNode* node, RBTreeNode* parent, int num) {
+    if (!node) {
+        // 沒有節點就建立一個新的節點，若沒有parent代表該新節點為root
+        return parent ? new RBTreeNode(num, parent) : new RBTreeNode(num);
+    }
+    if (num > node->getNum()) {
+        // 往右子樹丟
+        node->setRight(insert(node->getRight(), node, num));
+    } else if (num < node->getNum()) {
+        // 往左子樹丟
+        node->setLeft(insert(node->getLeft(), node, num));
+    }
+    // 相等代表重複
+    return node;
+}
+RBTreeNode* RedBlackTree::remove(RBTreeNode* node, int num) { return nullptr; }
 
 #endif
