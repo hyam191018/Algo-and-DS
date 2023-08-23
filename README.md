@@ -29,8 +29,8 @@
 (5) Tree
 - Binary search tree
 - AVL tree 註: 為BST的進階版，每次insert和remove都要動態調整root，另外，對於要如何調整LL、LR、RR、RL最好用畫圖的方式判斷。
-- RB tree
-- Splay tree ~TODO
+- RB tree 註: 因為root到leaf經過的黑色node數量相同且不能有紅色node相連，故最長路徑(紅黑交錯)不會超過最短路徑(全是黑)的兩倍。
+- Splay tree ~TODO 註: 適合cache、garbage collection!
 - B tree ~TODO
 - B+ tree ~TODO
 - Radix tree ~TODO
@@ -57,3 +57,20 @@
 | 刪除  | O(n)    | O(n)    | O(1)    | O(1)  | O(1)      | O(logn)  | 
 
 stack跟queue只有在刪除第一個(或最後一個)元素時才能達到O(1)，而Hash map受限於Array與Collision的問題，表現可能會達到O(n)，而Skip list若沒有做好平衡，也可能會變成O(n)
+
+---
+
+| DS | Bineary search tree | AVL tree | Read-Black tree | Splay tree |
+|:--:|:--:|:--:|:--:|:--:|
+| 查找  | O(logn)  | O(logn)  | O(logn)  | O(logn)  |
+| 插入  | O(logn)  | O(logn)  | O(logn)  | O(logn)  |
+| 刪除  | O(logn)  | O(logn)  | O(logn)  | O(logn)  |
+| 最差  | O(n)  | O(logn)  | O(logn)  | O(n)  |
+
+BST跟Splay tree在某些情況可能會變成Linked list，導致存取效率變成O(n)，其他普遍都是趨近O(logn)，BST是最基本的實現，而AVL tree、RB tree與Splay tree都有各自的優點:
+
+AVL tree保證了平衡性(左右子樹最多相差1)，能最有效率的提升search速度，但在insert與remove時，需額外花時間做平衡。
+
+RB tree犧牲了一點平衡性(左右子樹最多相差1倍)，雖然降低了search的速度，但提昇了insert與remove的速度，因為不會每次操作都要平衡。
+
+Splay tree最大的優點就是越常存取的node會越靠近root，非常適合用作cache的設計。
