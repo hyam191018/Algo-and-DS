@@ -9,13 +9,23 @@ int main() {
 
     RedBlackTree rbt;
     SinglyLinkedList list;
-    const int numOperations = 50; // Number of operations (insert, search, remove)
+    const int numOperations = 100; // Number of operations (insert, search, remove)
 
     // Insertion phase
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
         rbt.insert(num);
         list.insert(num);
+    }
+    cout << " -------------------------- RBT -------------------------- " << endl;
+    rbt.printTree();
+    cout << " ------------------------- COLOR ------------------------- " << endl;
+    rbt.printColor();
+    // Remove phase
+    for (int i = 0; i < numOperations / 2; ++i) {
+        int num = rand() % numOperations; // Generate a random number
+        rbt.remove(num);
+        list.remove(num);
     }
     cout << " -------------------------- RBT -------------------------- " << endl;
     rbt.printTree();
