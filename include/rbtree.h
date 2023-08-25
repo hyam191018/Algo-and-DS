@@ -53,7 +53,7 @@ class RedBlackTree {
   public:
     RedBlackTree(void) {
         NIL = new RBTreeNode(0, nullptr, root, nullptr, BLACK); // NIL的Left node必為root
-        root = nullptr;
+        root = NIL;
     }
     ~RedBlackTree(void) { // TODO:應該要刪除所有的node
         delete NIL;
@@ -371,7 +371,7 @@ void RedBlackTree::remove(RBTreeNode* node, RBTreeNode* parent, int num) {
     } else if (getChildType(node) == RIGHT_CHILD) {
         parent->setRight(new_node);
     }
-    removeFix(node, new_node);
+    // removeFix(node, new_node); TODO
     delete node;
 }
 
