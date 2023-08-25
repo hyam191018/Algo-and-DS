@@ -17,12 +17,8 @@ int main() {
         rbt.insert(num);
         list.insert(num);
     }
-    cout << " -------------------------- RBT -------------------------- " << endl;
-    rbt.printTree();
-    cout << " ------------------------- COLOR ------------------------- " << endl;
-    rbt.printColor();
     // Remove phase
-    for (int i = 0; i < numOperations / 2; ++i) {
+    for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
         rbt.remove(num);
         list.remove(num);
@@ -31,7 +27,7 @@ int main() {
     rbt.printTree();
     cout << " ------------------------- COLOR ------------------------- " << endl;
     rbt.printColor();
-    cout << " ------------------------------------------- " << endl;
+    cout << " --------------------------------------------------------- " << endl;
     cout << "RBT  all: ";
     rbt.inorderTraversal();
     cout << endl;
