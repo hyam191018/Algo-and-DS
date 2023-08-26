@@ -42,8 +42,7 @@ class RedBlackTree {
     RBTreeNode* findUncle(RBTreeNode* node);   // 返回 uncle節點
     RBTreeNode* findBrother(RBTreeNode* node); // 返回 sibling節點
     void insertFix(RBTreeNode* node);          // 重新調整平衡(node為新增節點)
-    void removeFix(RBTreeNode* node,
-                   RBTreeNode* rp_node); // 重新調整平衡(node為刪除節點, rp_node為替補節點)
+    void removeFix(RBTreeNode* node);          // 重新調整平衡(node為替補節點)
     RBTreeNode* rightRotation(RBTreeNode* node);
     RBTreeNode* leftRotation(RBTreeNode* node);
     RBTreeNode* search(RBTreeNode* node, int num); // 返回目標節點位置，或是nullptr
@@ -52,7 +51,7 @@ class RedBlackTree {
 
   public:
     RedBlackTree(void) {
-        NIL = new RBTreeNode(0, nullptr, root, nullptr, BLACK); // NIL的Left node必為root
+        NIL = new RBTreeNode(0, nullptr, nullptr, nullptr, BLACK); // NIL的Left node必為root
         root = NIL;
     }
     ~RedBlackTree(void) { // TODO:應該要刪除所有的node
@@ -74,7 +73,13 @@ class RedBlackTree {
 
 void RedBlackTree::printTree(RBTreeNode* node, string prefix = "", bool isLeft = true,
                              bool isNum = true) {
-    if (!node || node == NIL) {
+    if (!node) {
+        return;
+    }
+    if (node == NIL) {
+        cout << prefix;
+        cout << (isLeft ? "└── " : "┌── ");
+        cout << "NIL" << endl;
         return;
     }
     printTree(node->getRight(), prefix + (isLeft ? "│   " : "    "), false, isNum);
@@ -153,9 +158,7 @@ RBTreeNode* RedBlackTree::rightRotation(RBTreeNode* node) {
         parent->setRight(new_node);
     }
     // 新節點的右子變成舊節點的左子
-    if (new_node->getRight() != NIL) {
-        new_node->getRight()->setParent(node);
-    }
+    new_node->getRight()->setParent(node);
     node->setLeft(new_node->getRight());
     // 舊節點變成新節點的右子
     new_node->setRight(node);
@@ -174,9 +177,7 @@ RBTreeNode* RedBlackTree::leftRotation(RBTreeNode* node) {
         parent->setRight(new_node);
     }
     // 新節點的左子變成舊節點的右子
-    if (new_node->getLeft() != NIL) {
-        new_node->getLeft()->setParent(node);
-    }
+    new_node->getLeft()->setParent(node);
     node->setRight(new_node->getLeft());
     // 舊節點變成新節點的左子
     new_node->setLeft(node);
@@ -247,52 +248,51 @@ void RedBlackTree::insertFix(RBTreeNode* node) {
         insertFix(grandParent);
     }
 }
-void RedBlackTree::removeFix(RBTreeNode* node, RBTreeNode* rp_node) {
-    // 紅色節點可直接移除，不須平衡
-    if (!node || !rp_node || node->getColor() == RED) {
+void RedBlackTree::removeFix(RBTreeNode* rp_node) {
+    RBTreeNode *brother, *parent;
+    if (!rp_node) {
         return;
     }
-    // 黑色節點被移除會導致不平衡
-    if (rp_node->getColor() == RED) { // 若替補節點是紅色，直接塗成黑色即可
+    if (rp_node == root) { // 若替補節點是紅色，直接塗成黑色即可
         rp_node->setColor(BLACK);
         return;
     }
-    // 若替補節點本來就是黑色，會導致其子樹不平衡
-    // 從替補節點開始修正，替補節點相對於其兄弟少一black
-    RBTreeNode* brother = findBrother(rp_node);
-    RBTreeNode* parent = brother->getParent();
-    // 因為rp_node可能是NIL，故不能用rp_node來找parent
-    if (brother->getColor() == RED) { // 若兄弟節點是紅色
-        // 兄弟塗黑、parent塗紅，parent旋轉(左邊少就左旋反之右旋)
+    if (brother->getColor() == RED) {
         brother->setColor(BLACK);
         parent->setColor(RED);
-        if (getChildType(brother) == LEFT_CHILD) {
-            rightRotation(parent);
-        } else if (getChildType(parent) == RIGHT_CHILD) {
+        if (getChildType(rp_node) == LEFT_CHILD) {
             leftRotation(parent);
+        } else if (getChildType(rp_node) == RIGHT_CHILD) {
+            rightRotation(parent);
         }
-    } else { // 若兄弟節點為黑色
-        // 若其左右子節點都為黑色，就把兄弟節點塗紅
-        if ((!brother->getRight() || brother->getRight()->getColor() == BLACK) &&
-            (!brother->getLeft() || brother->getLeft()->getColor() == BLACK)) {
-            brother->setColor(RED);
-            // 此時兄弟節點跟父節點可能會連續紅色，就把其兄弟節點當作新節點平衡
-            insertFix(brother);
-        } else if ((brother->getLeft() && brother->getLeft()->getColor() == RED) &&
-                   (!brother->getRight() ||
-                    brother->getRight()->getColor() == BLACK)) { // 若其左子為紅且右子為黑
-            // 兄弟塗紅與其左子塗黑
-            brother->setColor(RED);
-            (brother->getLeft())->setColor(BLACK);
-            // 兄弟右旋
-            rightRotation(brother);
-            // 此時兄弟節點跟父節點可能會連續紅色，就把其兄弟節點當作新節點平衡
-            insertFix(brother);
-        } else { // 其右子為紅 左子隨便
-            brother->setColor((brother->getParent())->getColor());
-            brother->getParent()->setColor(BLACK);
+        brother = findBrother(rp_node);
+    }
+    if (brother->getRight()->getColor() == BLACK && brother->getLeft()->getColor() == BLACK) {
+        brother->setColor(RED);
+        removeFix(parent);
+    } else {
+        if (getChildType(rp_node) == LEFT_CHILD) {
+            if (brother->getRight()->getColor() == RED) {
+                brother->getLeft()->setColor(BLACK);
+                brother->setColor(RED);
+                rightRotation(brother);
+                brother = findBrother(rp_node);
+            }
+            brother->setColor(parent->getColor());
+            parent->setColor(BLACK);
             brother->getRight()->setColor(BLACK);
-            leftRotation(brother->getParent());
+            leftRotation(parent);
+        } else if (getChildType(rp_node) == RIGHT_CHILD) {
+            if (brother->getLeft()->getColor() == RED) {
+                brother->getRight()->setColor(BLACK);
+                brother->setColor(RED);
+                leftRotation(brother);
+                brother = findBrother(rp_node);
+            }
+            brother->setColor(parent->getColor());
+            parent->setColor(BLACK);
+            brother->getLeft()->setColor(BLACK);
+            rightRotation(parent);
         }
     }
 }
@@ -341,37 +341,32 @@ void RedBlackTree::remove(RBTreeNode* node, RBTreeNode* parent, int num) {
     }
     // 刪除node，且尋找新的node替補
     RBTreeNode* new_node = NIL;
-    if (node->getRight() != NIL) {
+    if (node->getLeft() == NIL) {
+        new_node = node->getRight();
+    } else if (node->getRight() == NIL) { // 只有左節點，直接補上
+        new_node = node->getLeft();
+    } else {
         new_node = findMin(node->getRight()); // 找右子樹最小作為替代節點，此時new_node不會是NIL
-        // 建立新關係
-        if (new_node->getRight() != NIL) { // new_node的right取代原new_node的位置
-            new_node->getRight()->setParent(new_node->getParent());
-        }
+        new_node->getRight()->setParent(new_node->getParent());
         if (getChildType(new_node) == LEFT_CHILD) {
             new_node->getParent()->setLeft(new_node->getRight());
         } else if (getChildType(new_node) == RIGHT_CHILD) {
             new_node->getParent()->setRight(new_node->getRight());
         }
         new_node->setLeft(node->getLeft()); // new_node接替node的left and right child
+        node->getLeft()->setParent(new_node);
         new_node->setRight(node->getRight());
-        if (node->getLeft() != NIL) {
-            node->getLeft()->setParent(new_node);
-        }
-        if (node->getRight() != NIL) {
-            node->getRight()->setParent(new_node);
-        }
-    } else if (node->getLeft() != NIL) { // 只有左節點，直接補上
-        new_node = node->getLeft();
+        node->getRight()->setParent(new_node);
     }
-    if (new_node != NIL) { // new_node取代node的位置
-        new_node->setParent(parent);
-    }
+    new_node->setParent(parent);
     if (getChildType(node) == LEFT_CHILD) { // 原node的parent要找新child
         parent->setLeft(new_node);
     } else if (getChildType(node) == RIGHT_CHILD) {
         parent->setRight(new_node);
     }
-    // removeFix(node, new_node); TODO
+    if (node->getColor() == BLACK) {
+        removeFix(new_node);
+    }
     delete node;
 }
 
