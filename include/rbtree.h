@@ -320,6 +320,7 @@ void RedBlackTree::insert(RBTreeNode* node, RBTreeNode* parent, int num) {
         } else {
         }
         insertFix(new_node); // 檢查是否需要平衡
+        root = NIL->getLeft();
         return;
     }
     if (num > node->getNum()) {
@@ -328,6 +329,7 @@ void RedBlackTree::insert(RBTreeNode* node, RBTreeNode* parent, int num) {
         insert(node->getLeft(), node, num); // 往左子樹丟
     }
 }
+
 void RedBlackTree::remove(RBTreeNode* node, RBTreeNode* parent, int num) {
     if (!node || node == NIL) {
         return;
@@ -341,31 +343,29 @@ void RedBlackTree::remove(RBTreeNode* node, RBTreeNode* parent, int num) {
     }
     // 刪除node，且尋找新的node替補
     RBTreeNode* new_node = NIL;
-    if (node->getLeft() == NIL) {
-        new_node = node->getRight();
-    } else if (node->getRight() == NIL) { // 只有左節點，直接補上
-        new_node = node->getLeft();
-    } else {
+    if (node->getRight() != NIL) {
         new_node = findMin(node->getRight()); // 找右子樹最小作為替代節點，此時new_node不會是NIL
+        // 先把new_node的right child處理好，left child不用處理(必為NIL)
         new_node->getRight()->setParent(new_node->getParent());
         if (getChildType(new_node) == LEFT_CHILD) {
             new_node->getParent()->setLeft(new_node->getRight());
         } else if (getChildType(new_node) == RIGHT_CHILD) {
             new_node->getParent()->setRight(new_node->getRight());
         }
-        new_node->setLeft(node->getLeft()); // new_node接替node的left and right child
+        // new_node接替node的left and right child
+        new_node->setLeft(node->getLeft());
         node->getLeft()->setParent(new_node);
         new_node->setRight(node->getRight());
         node->getRight()->setParent(new_node);
+    } else if (node->getLeft() != NIL) { // 只有左節點，直接補上
+        new_node = node->getLeft();
     }
+    // parent改認new_node作為child
     new_node->setParent(parent);
-    if (getChildType(node) == LEFT_CHILD) { // 原node的parent要找新child
+    if (getChildType(node) == LEFT_CHILD) {
         parent->setLeft(new_node);
     } else if (getChildType(node) == RIGHT_CHILD) {
         parent->setRight(new_node);
-    }
-    if (node->getColor() == BLACK) {
-        removeFix(new_node);
     }
     delete node;
 }
