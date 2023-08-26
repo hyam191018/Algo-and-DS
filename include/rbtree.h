@@ -61,14 +61,8 @@ class RedBlackTree {
     void printColor(void) { printTree(root, "", true, false); }
     void inorderTraversal(void) { inorderTraversal(root); }
     bool search(int num) { return search(root, num); }
-    void insert(int num) {
-        insert(root, NIL, num);
-        root = NIL->getLeft();
-    }
-    void remove(int num) {
-        remove(root, NIL, num);
-        root = NIL->getLeft();
-    }
+    void insert(int num) { insert(root, NIL, num); }
+    void remove(int num) { remove(root, NIL, num); }
 };
 
 void RedBlackTree::printTree(RBTreeNode* node, string prefix = "", bool isLeft = true,
@@ -248,54 +242,7 @@ void RedBlackTree::insertFix(RBTreeNode* node) {
         insertFix(grandParent);
     }
 }
-void RedBlackTree::removeFix(RBTreeNode* rp_node) {
-    RBTreeNode *brother, *parent;
-    if (!rp_node) {
-        return;
-    }
-    if (rp_node == root) { // 若替補節點是紅色，直接塗成黑色即可
-        rp_node->setColor(BLACK);
-        return;
-    }
-    if (brother->getColor() == RED) {
-        brother->setColor(BLACK);
-        parent->setColor(RED);
-        if (getChildType(rp_node) == LEFT_CHILD) {
-            leftRotation(parent);
-        } else if (getChildType(rp_node) == RIGHT_CHILD) {
-            rightRotation(parent);
-        }
-        brother = findBrother(rp_node);
-    }
-    if (brother->getRight()->getColor() == BLACK && brother->getLeft()->getColor() == BLACK) {
-        brother->setColor(RED);
-        removeFix(parent);
-    } else {
-        if (getChildType(rp_node) == LEFT_CHILD) {
-            if (brother->getRight()->getColor() == RED) {
-                brother->getLeft()->setColor(BLACK);
-                brother->setColor(RED);
-                rightRotation(brother);
-                brother = findBrother(rp_node);
-            }
-            brother->setColor(parent->getColor());
-            parent->setColor(BLACK);
-            brother->getRight()->setColor(BLACK);
-            leftRotation(parent);
-        } else if (getChildType(rp_node) == RIGHT_CHILD) {
-            if (brother->getLeft()->getColor() == RED) {
-                brother->getRight()->setColor(BLACK);
-                brother->setColor(RED);
-                leftRotation(brother);
-                brother = findBrother(rp_node);
-            }
-            brother->setColor(parent->getColor());
-            parent->setColor(BLACK);
-            brother->getLeft()->setColor(BLACK);
-            rightRotation(parent);
-        }
-    }
-}
+void RedBlackTree::removeFix(RBTreeNode* rp_node) {}
 RBTreeNode* RedBlackTree::search(RBTreeNode* node, int num) {
     if (!node) {
         return nullptr;
@@ -367,6 +314,10 @@ void RedBlackTree::remove(RBTreeNode* node, RBTreeNode* parent, int num) {
     } else if (getChildType(node) == RIGHT_CHILD) {
         parent->setRight(new_node);
     }
+    if (root == node) {
+        root = new_node;
+    }
+    removeFix(new_node);
     delete node;
 }
 

@@ -9,7 +9,7 @@ int main() {
 
     RedBlackTree rbt;
     SinglyLinkedList list;
-    const int numOperations = 100; // Number of operations (insert, search, remove)
+    const int numOperations = 10000; // Number of operations (insert, search, remove)
 
     // Insertion phase
     for (int i = 0; i < numOperations; ++i) {
