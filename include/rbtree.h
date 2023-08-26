@@ -103,7 +103,7 @@ inline ChildType RedBlackTree::getChildType(RBTreeNode* node) {
         return LEFT_CHILD;
     }
     RBTreeNode* parent = node->getParent();
-    if (node->getNum() > parent->getNum()) {
+    if (node->getNum() >= parent->getNum()) { // 尋找替代節點時num暫時會相同，但一定是right child
         return RIGHT_CHILD;
     } else if (node->getNum() < parent->getNum()) {
         return LEFT_CHILD;
@@ -242,7 +242,55 @@ void RedBlackTree::insertFix(RBTreeNode* node) {
         insertFix(grandParent);
     }
 }
-void RedBlackTree::removeFix(RBTreeNode* rp_node) {} // TODO
+void RedBlackTree::removeFix(RBTreeNode* node) {
+    if (!node) {
+        return;
+    }
+    if (node == root) { // 若替補節點是紅色，直接塗成黑色即可
+        node->setColor(BLACK);
+        return;
+    }
+    RBTreeNode* brother = findBrother(node);
+    RBTreeNode* parent = node->getParent();
+    if (brother->getColor() == RED) {
+        brother->setColor(BLACK);
+        parent->setColor(RED);
+        if (getChildType(node) == LEFT_CHILD) {
+            leftRotation(parent);
+        } else if (getChildType(node) == RIGHT_CHILD) {
+            rightRotation(parent);
+        }
+        brother = findBrother(node);
+    }
+    if (brother->getRight()->getColor() == BLACK && brother->getLeft()->getColor() == BLACK) {
+        brother->setColor(RED);
+        removeFix(parent);
+    } else {
+        if (getChildType(node) == LEFT_CHILD) {
+            if (brother->getRight()->getColor() == RED) {
+                brother->getLeft()->setColor(BLACK);
+                brother->setColor(RED);
+                rightRotation(brother);
+                brother = findBrother(node);
+            }
+            brother->setColor(parent->getColor());
+            parent->setColor(BLACK);
+            brother->getRight()->setColor(BLACK);
+            leftRotation(parent);
+        } else if (getChildType(node) == RIGHT_CHILD) {
+            if (brother->getLeft()->getColor() == RED) {
+                brother->getRight()->setColor(BLACK);
+                brother->setColor(RED);
+                leftRotation(brother);
+                brother = findBrother(node);
+            }
+            brother->setColor(parent->getColor());
+            parent->setColor(BLACK);
+            brother->getLeft()->setColor(BLACK);
+            rightRotation(parent);
+        }
+    }
+}
 RBTreeNode* RedBlackTree::search(RBTreeNode* node, int num) {
     if (!node) {
         return nullptr;
@@ -289,36 +337,34 @@ void RedBlackTree::remove(RBTreeNode* node, RBTreeNode* parent, int num) {
         return;
     }
     // 刪除node，且尋找新的node替補
-    RBTreeNode* new_node = NIL;
-    if (node->getRight() != NIL) {
-        new_node = findMin(node->getRight()); // 找右子樹最小作為替代節點，此時new_node不會是NIL
-        // 先把new_node的right child處理好，left child不用處理(必為NIL)
-        new_node->getRight()->setParent(new_node->getParent());
-        if (getChildType(new_node) == LEFT_CHILD) {
-            new_node->getParent()->setLeft(new_node->getRight());
-        } else if (getChildType(new_node) == RIGHT_CHILD) {
-            new_node->getParent()->setRight(new_node->getRight());
-        }
-        // new_node接替node的left and right child
-        new_node->setLeft(node->getLeft());
-        node->getLeft()->setParent(new_node);
-        new_node->setRight(node->getRight());
-        node->getRight()->setParent(new_node);
-    } else if (node->getLeft() != NIL) { // 只有左節點，直接補上
-        new_node = node->getLeft();
+    RBTreeNode* del_node = node;
+    RBTreeNode* tmp_node;
+    if (del_node->getLeft() != NIL && del_node->getRight() != NIL) { // 有兩個child node
+        tmp_node = findMin(del_node->getRight());                    // 找尋替代節點
+        del_node->setNum(tmp_node->getNum()); // 把替代節點的資料搶過來
+        del_node = tmp_node;                  // 改刪替代節點
     }
-    // parent改認new_node作為child
-    new_node->setParent(parent);
-    if (getChildType(node) == LEFT_CHILD) {
-        parent->setLeft(new_node);
-    } else if (getChildType(node) == RIGHT_CHILD) {
-        parent->setRight(new_node);
+    if (del_node->getLeft() == NIL) {
+        tmp_node = del_node->getRight(); // 取代刪除的節點
+    } else if (del_node->getRight() == NIL) {
+        tmp_node = del_node->getLeft();
     }
-    if (root == node) {
-        root = new_node;
+    // 把del_node的資料給tmp_node
+    tmp_node->setParent(del_node->getParent());
+    if (getChildType(del_node) == LEFT_CHILD) {
+        del_node->getParent()->setLeft(tmp_node);
+    } else if (getChildType(del_node) == RIGHT_CHILD) {
+        del_node->getParent()->setRight(tmp_node);
     }
-    removeFix(new_node);
-    delete node;
+    // root可能會變更
+    if (root == del_node) {
+        root = tmp_node;
+    }
+    // 刪red node沒關係
+    if (del_node->getColor() == BLACK) {
+        // removeFix(tmp_node);
+    }
+    delete del_node;
 }
 
 #endif
