@@ -242,7 +242,7 @@ void RedBlackTree::insertFix(RBTreeNode* node) {
         insertFix(grandParent);
     }
 }
-void RedBlackTree::removeFix(RBTreeNode* rp_node) {}
+void RedBlackTree::removeFix(RBTreeNode* rp_node) {} // TODO
 RBTreeNode* RedBlackTree::search(RBTreeNode* node, int num) {
     if (!node) {
         return nullptr;
