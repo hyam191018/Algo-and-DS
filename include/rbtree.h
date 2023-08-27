@@ -376,7 +376,7 @@ void RedBlackTree::remove(RBTreeNode* node, RBTreeNode* parent, int num) {
     }
     // 刪red node沒關係
     if (del_node->getColor() == BLACK) {
-        removeFix(del_node);
+        removeFix(del_node); // 應該要是removeFix(tmp_node)才對呀?!
     }
     delete del_node;
 }
