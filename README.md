@@ -32,7 +32,7 @@
 (6) TODO
 - Skip List
 - Priority queue
-- Splay tree - 適合cache、garbage collection!
+- Splay tree
 - B tree
 - B+ tree
 - Radix tree
@@ -74,6 +74,6 @@ AVL tree保證了平衡性(左右子樹最多相差1)，能最有效率的提升
 
 RB tree犧牲了一點平衡性(左右子樹最多相差1倍)，雖然降低了search的速度，但提昇了insert與remove的速度，因為不會每次操作都要平衡。
 
-Splay tree最大的優點就是越常存取的node會越靠近root，非常適合用作cache的設計。
+Splay tree最大的優點就是越常存取的node會越靠近root，非常適合用作cache/GC。
 
 在測試中(Linked list、BST、AVL Tree、RB Tree)，RB Tree的效率最好，再來是Linked list、BST，最後是AVL Tree。AVL Tree可能是設計問題，Top down的實作方式會導致每次rebalance時都要從root重新計算高度，花費太多時間了。
