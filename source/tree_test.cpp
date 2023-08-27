@@ -1,4 +1,5 @@
 #include "../include/list.h"
+#include "../include/rbtree.h"
 #include "../include/tree.h"
 #include <cstdlib>
 #include <ctime>
@@ -9,14 +10,16 @@ int main() {
 
     AVLTree avl;
     BinarySearchTree bst;
+    RedBlackTree rbt;
     SinglyLinkedList list;
-    const int numOperations = 100; // Number of operations (insert, search, remove)
+    const int numOperations = 10000; // Number of operations (insert, search, remove)
 
     // Insertion phase
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
         avl.insert(num);
         bst.insert(num);
+        rbt.insert(num);
         list.insert(num);
     }
     // Removal phase
@@ -24,19 +27,8 @@ int main() {
         int num = rand() % numOperations; // Generate a random number
         avl.remove(num);
         bst.remove(num);
+        rbt.remove(num);
         list.remove(num);
     }
-    cout << " -------------------------- BST -------------------------- " << endl;
-    bst.printTree();
-    cout << " -------------------------- AVL -------------------------- " << endl;
-    avl.printTree();
-    cout << " ------------------------------------------- " << endl;
-    cout << "BST  all: ";
-    bst.inorderTraversal();
-    cout << "AVL  all: ";
-    avl.inorderTraversal();
-    list.sort();
-    list.printAll();
-
     return 0;
 }

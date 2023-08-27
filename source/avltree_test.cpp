@@ -1,5 +1,5 @@
 #include "../include/list.h"
-#include "../include/rbtree.h"
+#include "../include/tree.h"
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -7,29 +7,27 @@
 int main() {
     srand(time(nullptr));
 
-    RedBlackTree rbt;
+    AVLTree avl;
     SinglyLinkedList list;
     const int numOperations = 1000; // Number of operations (insert, search, remove)
 
     // Insertion phase
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
-        rbt.insert(num);
+        avl.insert(num);
         list.insert(num);
     }
     // Remove phase
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
-        rbt.remove(num);
+        avl.remove(num);
         list.remove(num);
     }
-    cout << " -------------------------- RBT -------------------------- " << endl;
-    rbt.printTree();
-    cout << " ------------------------- COLOR ------------------------- " << endl;
-    rbt.printColor();
+    cout << " ------------------------- AVLT -------------------------- " << endl;
+    avl.printTree();
     cout << " --------------------------------------------------------- " << endl;
-    cout << "RBT  all: ";
-    rbt.inorderTraversal();
+    cout << "AVL  all: ";
+    avl.inorderTraversal();
     cout << endl;
     list.sort();
     list.printAll();
