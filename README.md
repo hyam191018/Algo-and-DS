@@ -20,13 +20,11 @@
 - Stack
 - Queue
 - Hash Map
-- Skip List ~TODO
   
 (4) Heap
 - Max heap
 - Min heap
 - Heap sort : O(nlogn) 註: 在 sort.h
-- Priority queue ~TODO
 
 (5) Tree
 - Binary search tree
@@ -39,13 +37,15 @@
 註: 因為root到leaf經過的黑色node數量相同且不能有紅色node相連，故最長路徑(紅黑交錯)不會超過最短路徑(全是黑)的兩倍。
 另外程式的實現難度較高，insert時須考慮uncle node，remove時須考慮brother(sibling) node
 
+(6) TODO
+- Skip List
+- Priority queue
 - Splay tree ~TODO 註: 適合cache、garbage collection!
-- B tree ~TODO
-- B+ tree ~TODO
-- Radix tree ~TODO
-- Maple tree ~TODO
-
-(6) Graph ~TODO
+- B tree
+- B+ tree
+- Radix tree
+- Maple tree
+- Graph
 
 ## 補充
 
