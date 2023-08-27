@@ -32,7 +32,7 @@
 (6) TODO
 - Skip List
 - Priority queue
-- Splay tree ~TODO 註: 適合cache、garbage collection!
+- Splay tree - 適合cache、garbage collection!
 - B tree
 - B+ tree
 - Radix tree
