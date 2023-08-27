@@ -6,9 +6,7 @@
 - Bubble sort : O(n^2)
 - Insertion sort : O(n^2)
 - Counting sort : O(n+k)
-- Merge sort : O(nlogn)
-
-註: 使用Top-down的方式
+- Merge sort : O(nlogn) - Top-down
 
 (2) Unstable sorting
 - Selection sort : O(n^2)
@@ -24,18 +22,12 @@
 (4) Heap
 - Max heap
 - Min heap
-- Heap sort : O(nlogn) 註: 在 sort.h
+- Heap sort : O(nlogn) - in sort.h
 
 (5) Tree
 - Binary search tree
 - AVL tree
-
-註: 為BST的進階版，每次insert和remove都要動態調整root，另外，對於要如何調整LL、LR、RR、RL最好用畫圖的方式判斷。
-
 - RB tree
-
-註: 因為root到leaf經過的黑色node數量相同且不能有紅色node相連，故最長路徑(紅黑交錯)不會超過最短路徑(全是黑)的兩倍。
-另外程式的實現難度較高，insert時須考慮uncle node，remove時須考慮brother(sibling) node
 
 (6) TODO
 - Skip List
