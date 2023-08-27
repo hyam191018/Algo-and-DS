@@ -306,7 +306,7 @@ void RedBlackTree::removeFix(RBTreeNode* node) {
     }
 }
 RBTreeNode* RedBlackTree::search(RBTreeNode* node, int num) {
-    if (!node) {
+    if (!node || node == NIL) {
         return nullptr;
     }
     if (num > node->getNum()) {
