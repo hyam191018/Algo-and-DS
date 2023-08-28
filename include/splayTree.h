@@ -233,6 +233,7 @@ void SplayTree::remove(SplayTreeNode* node, int num) {
         }
     } else { // 只有左子或沒有的話
         root = tmp_node->getLeft();
+        root->setParent(nullptr);
     }
     delete tmp_node;
 }
