@@ -12,7 +12,7 @@
 - Selection sort
 - Quick sort
 
-(3) List
+(3) Linked List
 - Singly linked list
 - Doubly linked list
 - Stack
