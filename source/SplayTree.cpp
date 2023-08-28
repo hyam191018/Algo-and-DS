@@ -1,5 +1,5 @@
-#include "../include/list.h"
 #include "../include/splayTree.h"
+#include "../include/list.h"
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -10,12 +10,14 @@ int main() {
     SinglyLinkedList list;
     const int numOperations = 100; // Number of operations (insert, search, remove)
     // Insertion phase
+    cout << "Inserting phase" << endl;
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
         st.insert(num);
         list.insert(num);
     }
     // Search phase
+    cout << "Searching phase" << endl;
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
         if (st.search(num) != list.search(num)) {
@@ -23,6 +25,7 @@ int main() {
         }
     }
     // Remove phase
+    cout << "Removing phase" << endl;
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
         st.remove(num);
