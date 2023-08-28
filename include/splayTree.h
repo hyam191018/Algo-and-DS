@@ -81,7 +81,7 @@ inline ChildType SplayTree::getChildType(SplayTreeNode* node) {
     SplayTreeNode* parent = node->getParent();
     if (!parent) {
         return NO_PARENT;
-    } else if (node->getNum() > parent->getNum()) {
+    } else if (node->getNum() >= parent->getNum()) {
         return RIGHT_CHILD;
     } else if (node->getNum() < parent->getNum()) {
         return LEFT_CHILD;
@@ -215,6 +215,26 @@ void SplayTree::insert(SplayTreeNode* node, SplayTreeNode* parent, int num) {
         root = moveToRoot(node);
     }
 }
-void SplayTree::remove(SplayTreeNode* node, int num) {}
+void SplayTree::remove(SplayTreeNode* node, int num) {
+    if (!search(node, num)) {
+        return;
+    }
+    SplayTreeNode* tmp_node = root;
+    if (root->getRight()) {                   // 有右子的話
+        tmp_node = findMin(root->getRight()); // 替換節點
+        root->setNum(tmp_node->getNum());
+        if (getChildType(tmp_node) == LEFT_CHILD) { // 刪除tmp_node前，將其關係清洗
+            tmp_node->getParent()->setLeft(tmp_node->getRight());
+        } else if (getChildType(tmp_node) == RIGHT_CHILD) {
+            tmp_node->getParent()->setRight(tmp_node->getRight());
+        }
+        if (tmp_node->getRight()) {
+            tmp_node->getRight()->setParent(tmp_node->getParent());
+        }
+    } else { // 只有左子或沒有的話
+        root = tmp_node->getLeft();
+    }
+    delete tmp_node;
+}
 
 #endif

@@ -18,16 +18,16 @@ int main() {
     // Search phase
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
-        cout << "Search " << num << endl;
-        st.search(num);
-        st.printTree();
+        if (st.search(num) != list.search(num)) {
+            cout << "Search fail!" << endl;
+        }
     }
     // Remove phase
-    /*for (int i = 0; i < numOperations; ++i) {
+    for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
         st.remove(num);
         list.remove(num);
-    }*/
+    }
     cout << " ------------------------- Splay tree ------------------------- " << endl;
     st.printTree();
     cout << " -------------------- cmp with linked list -------------------- " << endl;
