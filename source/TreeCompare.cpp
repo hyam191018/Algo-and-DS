@@ -1,5 +1,6 @@
 #include "../include/list.h"
 #include "../include/rbtree.h"
+#include "../include/splayTree.h"
 #include "../include/timer.h"
 #include "../include/tree.h"
 #include <cstdlib>
@@ -12,27 +13,31 @@ int main() {
     AVLTree avl;
     BinarySearchTree bst;
     RedBlackTree rbt;
+    SplayTree st;
     SinglyLinkedList list;
     const int numOperations = 10000;
 
-    cout << "# Testing insert" << endl;
+    cout << endl << "# Testing insert" << endl;
     auto time = timerStart();
     for (int i = 0; i < numOperations; ++i) {
-        list.insert(i);
+        int num = rand() % numOperations;
+        list.insert(num);
     }
     cout << "Linked list ";
     timerEnd(time);
 
     time = timerStart();
     for (int i = 0; i < numOperations; ++i) {
-        bst.insert(i);
+        int num = rand() % numOperations;
+        bst.insert(num);
     }
     cout << "BST ";
     timerEnd(time);
 
     time = timerStart();
     for (int i = 0; i < numOperations; ++i) {
-        avl.insert(i);
+        int num = rand() % numOperations;
+        avl.insert(num);
     }
     cout << "AVL Tree ";
     timerEnd(time);
@@ -45,7 +50,15 @@ int main() {
     cout << "RB Tree ";
     timerEnd(time);
 
-    cout << "# Testing search" << endl;
+    time = timerStart();
+    for (int i = 0; i < numOperations; ++i) {
+        int num = rand() % numOperations;
+        st.insert(num);
+    }
+    cout << "Splay Tree ";
+    timerEnd(time);
+
+    cout << endl << "# Testing search" << endl;
     time = timerStart();
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations;
@@ -78,7 +91,15 @@ int main() {
     cout << "RB Tree ";
     timerEnd(time);
 
-    cout << "# Testing remove" << endl;
+    time = timerStart();
+    for (int i = 0; i < numOperations; ++i) {
+        int num = rand() % numOperations;
+        st.search(num);
+    }
+    cout << "Splay Tree ";
+    timerEnd(time);
+
+    cout << endl << "# Testing remove" << endl;
     time = timerStart();
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations;
@@ -109,6 +130,14 @@ int main() {
         rbt.remove(num);
     }
     cout << "RB Tree ";
+    timerEnd(time);
+
+    time = timerStart();
+    for (int i = 0; i < numOperations; ++i) {
+        int num = rand() % numOperations;
+        st.remove(num);
+    }
+    cout << "Splay Tree ";
     timerEnd(time);
 
     return 0;
