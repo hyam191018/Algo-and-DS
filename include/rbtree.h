@@ -310,9 +310,9 @@ RBTreeNode* RedBlackTree::search(RBTreeNode* node, int num) {
         return nullptr;
     }
     if (num > node->getNum()) {
-        return search(node->getLeft(), num);
-    } else if (num < node->getNum()) {
         return search(node->getRight(), num);
+    } else if (num < node->getNum()) {
+        return search(node->getLeft(), num);
     }
     return node;
 }

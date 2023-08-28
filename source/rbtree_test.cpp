@@ -17,6 +17,13 @@ int main() {
         rbt.insert(num);
         list.insert(num);
     }
+    // Search phase
+    for (int i = 0; i < numOperations; ++i) {
+        int num = rand() % numOperations; // Generate a random number
+        if (rbt.search(num) != list.search(num)) {
+            cout << "Search fail!" << endl;
+        }
+    }
     // Remove phase
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
