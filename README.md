@@ -27,12 +27,12 @@
 (5) Tree
 - Binary search tree
 - AVL tree
+- Splay tree
 - RB tree
 
 (6) TODO
 - Skip List
 - Priority queue
-- Splay tree
 - B tree
 - B+ tree
 - Radix tree
