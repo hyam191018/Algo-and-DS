@@ -9,13 +9,20 @@ int main() {
 
     BinarySearchTree bst;
     SinglyLinkedList list;
-    const int numOperations = 1000; // Number of operations (insert, search, remove)
+    const int numOperations = 100; // Number of operations (insert, search, remove)
 
     // Insertion phase
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations; // Generate a random number
         bst.insert(num);
         list.insert(num);
+    }
+    // Search phase
+    for (int i = 0; i < numOperations; ++i) {
+        int num = rand() % numOperations; // Generate a random number
+        if (bst.search(num) != list.search(num)) {
+            cout << "Search fail!" << endl;
+        }
     }
     // Remove phase
     for (int i = 0; i < numOperations; ++i) {
@@ -26,9 +33,8 @@ int main() {
     cout << " ------------------------- BST -------------------------- " << endl;
     bst.printTree();
     cout << " -------------------------------------------------------- " << endl;
-    cout << "AVL  all: ";
+    cout << "BST  all: ";
     bst.inorderTraversal();
-    cout << endl;
     list.sort();
     list.printAll();
 
