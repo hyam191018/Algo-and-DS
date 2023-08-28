@@ -22,7 +22,7 @@
 (4) Heap
 - Max heap
 - Min heap
-- Heap sort : O(nlogn) - in sort.h
+- Heap sort - in sort.h
 
 (5) Tree
 - Binary search tree
