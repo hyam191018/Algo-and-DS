@@ -3,14 +3,14 @@
 用C++來練習基本的資料結構與演算法
 
 (1) Stable sorting
-- Bubble sort : O(n^2)
-- Insertion sort : O(n^2)
-- Counting sort : O(n+k)
-- Merge sort : O(nlogn) - Top-down
+- Bubble sort
+- Insertion sort
+- Counting sort
+- Merge sort - Top-down
 
 (2) Unstable sorting
-- Selection sort : O(n^2)
-- Quick sort : O(nlogn)
+- Selection sort
+- Quick sort
 
 (3) List
 - Singly linked list
