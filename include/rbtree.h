@@ -5,7 +5,11 @@
 using namespace std;
 
 enum Color { RED, BLACK };
+
+#ifndef CHILD_TYPE
+#define CHILD_TYPE
 enum ChildType { LEFT_CHILD, RIGHT_CHILD, NO_PARENT };
+#endif
 
 class RBTreeNode {
   private:
