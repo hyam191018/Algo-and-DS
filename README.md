@@ -57,7 +57,7 @@ stack跟queue只有在刪除第一個(或最後一個)元素時才能達到O(1)�
 
 ---
 
-| DS | Bineary search tree | AVL tree | Read-Black tree | Splay tree |
+| DS | Bineary search tree | AVL tree | Red black tree | Splay tree |
 |:--:|:--:|:--:|:--:|:--:|
 | 查找  | O(logn)  | O(logn)  | O(logn)  | O(logn)  |
 | 插入  | O(logn)  | O(logn)  | O(logn)  | O(logn)  |
@@ -73,3 +73,34 @@ RB tree犧牲了一點平衡性(最長路徑最多為最短路徑的兩倍)，�
 Splay tree最大的優點就是越常存取的node會越靠近root，非常適合用作cache/GC。
 
 實現上的難易度: BST < Splay tree < AVL tree << RB tree
+
+---
+
+執行app/SpeedTest，會執行10萬次的隨機insert/search/remove:
+
+在insert的測試中: 
+
+1. Binear search tree: 32 ms
+2. Red black tree: 34 ms
+3. Splay tree: 162 ms
+4. Skip list: 216 ms
+5. Linked list: 3887 ms
+6. AVL tree: 38312 ms
+
+在search的測試中: 
+
+1. AVL tree: 21 ms
+2. Binear search tree: 23 ms
+3. Red black tree: 26 ms
+4. Splay tree: 148 ms
+5. Skip list: 241 ms
+6. Linked list: 5076 ms
+
+在remove的測試中: 
+
+1. Binear search tree: 23 ms
+2. Red black tree: 26 ms
+3. Splay tree: 64 ms
+4. Skip list: 3659 ms
+5. Linked list: 2714 ms
+6. AVL tree: 14266 ms
