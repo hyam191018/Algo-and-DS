@@ -78,7 +78,14 @@ Splay tree最大的優點就是越常存取的node會越靠近root，非常適�
 
 執行app/SpeedTest，會執行10萬次的隨機insert/search/remove:
 
-在insert的測試中: 
+| Operation | Insert | Search | Remove |
+|:--:|:--:|:--:|:--:|
+| 1  |Binear search tree: 32 ms|AVL tree: 21 ms|Binear search tree: 23 ms|
+| 2  |Red black tree: 34 ms|Binear search tree: 23 ms|Red black tree: 26 ms|
+| 3  |Splay tree: 162 ms|Red black tree: 26 ms|Splay tree: 64 ms|
+| 4  |Skip list: 216 ms|Splay tree: 148 ms|Skip list: 3659 ms|
+| 5  |Linked list: 3887 ms|Skip list: 241 ms|Linked list: 2714 ms|
+| 6  |AVL tree: 38312 ms|Linked list: 5076 ms|AVL tree: 14266 ms|
 
 1. Binear search tree: 32 ms
 2. Red black tree: 34 ms
