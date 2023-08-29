@@ -24,7 +24,6 @@
 - Max heap
 - Min heap
 - Heap sort (in sort.h)
-- Priority queue
 
 (5) Tree
 - Binary search tree
