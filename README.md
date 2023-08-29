@@ -6,7 +6,7 @@
 - Bubble sort
 - Insertion sort
 - Counting sort
-- Merge sort - Top-down
+- Merge sort (Top-down)
 
 (2) Unstable sorting
 - Selection sort
@@ -18,26 +18,22 @@
 - Stack
 - Queue
 - Hash Map
+- Skip List
   
 (4) Heap
 - Max heap
 - Min heap
-- Heap sort - in sort.h
+- Heap sort (in sort.h)
 
 (5) Tree
 - Binary search tree
 - AVL tree
 - Splay tree
-- RB tree
+- Red Black tree
 
 (6) TODO
-- Skip List
-- Priority queue
-- B tree
-- B+ tree
 - Radix tree
 - Maple tree
-- Graph
 
 ## 補充
 
