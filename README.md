@@ -30,7 +30,7 @@
 - Binary search tree
 - AVL tree
 - Splay tree
-- RB tree
+- Red Black tree
 
 (6) TODO
 - Radix tree
