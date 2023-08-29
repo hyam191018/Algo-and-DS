@@ -1,5 +1,6 @@
 #include "../include/list.h"
 #include "../include/rbtree.h"
+#include "../include/skipList.h"
 #include "../include/splayTree.h"
 #include "../include/timer.h"
 #include "../include/tree.h"
@@ -10,10 +11,11 @@
 int main() {
     srand(time(nullptr));
 
-    AVLTree avl;
+    AVLTree avlt;
     BinarySearchTree bst;
     RedBlackTree rbt;
     SplayTree st;
+    SkipList sl;
     SinglyLinkedList list;
     const int numOperations = 10000;
 
@@ -37,7 +39,7 @@ int main() {
     time = timerStart();
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations;
-        avl.insert(num);
+        avlt.insert(num);
     }
     cout << "AVL Tree ";
     timerEnd(time);
@@ -56,6 +58,14 @@ int main() {
         st.insert(num);
     }
     cout << "Splay Tree ";
+    timerEnd(time);
+
+    time = timerStart();
+    for (int i = 0; i < numOperations; ++i) {
+        int num = rand() % numOperations;
+        sl.insert(num);
+    }
+    cout << "Skip List ";
     timerEnd(time);
 
     cout << endl << "# Testing search" << endl;
@@ -78,7 +88,7 @@ int main() {
     time = timerStart();
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations;
-        avl.search(num);
+        avlt.search(num);
     }
     cout << "AVL Tree ";
     timerEnd(time);
@@ -97,6 +107,14 @@ int main() {
         st.search(num);
     }
     cout << "Splay Tree ";
+    timerEnd(time);
+
+    time = timerStart();
+    for (int i = 0; i < numOperations; ++i) {
+        int num = rand() % numOperations;
+        sl.search(num);
+    }
+    cout << "Skip List ";
     timerEnd(time);
 
     cout << endl << "# Testing remove" << endl;
@@ -119,7 +137,7 @@ int main() {
     time = timerStart();
     for (int i = 0; i < numOperations; ++i) {
         int num = rand() % numOperations;
-        avl.remove(num);
+        avlt.remove(num);
     }
     cout << "AVL Tree ";
     timerEnd(time);
@@ -138,6 +156,14 @@ int main() {
         st.remove(num);
     }
     cout << "Splay Tree ";
+    timerEnd(time);
+
+    time = timerStart();
+    for (int i = 0; i < numOperations; ++i) {
+        int num = rand() % numOperations;
+        sl.remove(num);
+    }
+    cout << "Skip List ";
     timerEnd(time);
 
     return 0;
