@@ -17,7 +17,7 @@ int main() {
     SplayTree st;
     SkipList sl;
     SinglyLinkedList list;
-    const int numOperations = 10000;
+    const int numOperations = 100000;
 
     cout << endl << "# Testing insert" << endl;
     auto time = timerStart();
